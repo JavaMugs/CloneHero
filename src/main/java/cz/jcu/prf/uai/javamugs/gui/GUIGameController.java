@@ -1,4 +1,4 @@
-package cz.jcu.prf.uai.javamugs;
+package cz.jcu.prf.uai.javamugs.gui;
 
 import javafx.scene.control.Button;
 
