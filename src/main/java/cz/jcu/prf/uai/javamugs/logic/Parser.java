@@ -1,5 +1,7 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Parser {
 
 	public Parser() {
@@ -7,7 +9,7 @@ public class Parser {
 	}
 	
 	public PressChart parseFile(String fileName, double timeOffset) {
-		return new PressChart();
+		throw new NotImplementedException();
 	}
 
 }
