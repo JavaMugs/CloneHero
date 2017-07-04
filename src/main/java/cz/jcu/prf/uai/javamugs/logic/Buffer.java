@@ -49,6 +49,20 @@ public class Buffer {
     }
 
     /**
+     * @return size of Chord queue
+     */
+    public int getChordCount() {
+        return chordQueue.size();
+    }
+
+    /**
+     * @return size of times list
+     */
+    public int getTimesCount() {
+        return pressTimes.size();
+    }
+
+    /**
      * Pair of hites and misses
      */
     public class Pair {
