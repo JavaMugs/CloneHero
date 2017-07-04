@@ -8,7 +8,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class GUIGameController {
+public class GameController {
 
 }
 
