@@ -1,9 +1,17 @@
-package cz.jcu.prf.uai.javamugs;
+package cz.jcu.prf.uai.javamugs.logic;
 
 public class Game {
 
-	public Game() {
-		// TODO Auto-generated constructor stub
+	public Game(int offset, byte difficulty, PressChart pressChart) {
+		// TODO...
+	}
+	
+	public Report tick(double curretTime, Chord chord) {
+		// TODO...
+	}
+	
+	public void end() {
+		// TODO...
 	}
 
 }
