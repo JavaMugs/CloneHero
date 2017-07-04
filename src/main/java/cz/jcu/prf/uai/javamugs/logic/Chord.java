@@ -1,20 +1,24 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class Chord {
 	
-	public static int RED = 0;
-	public static int YELLOW = 1;
-	public static int GREEN = 2;
-	public static int BLUE = 3;
-	public static int MAGENTA = 4;
+	private boolean[] arr = new boolean[5];
+	
+	public static final int RED = 0;
+	public static final int YELLOW = 1;
+	public static final int GREEN = 2;
+	public static final int BLUE = 3;
+	public static final int MAGENTA = 4;
 
 	public Chord(boolean red, boolean yellow, boolean green, boolean blue, boolean magenta) {
-		throw new NotImplementedException();
+		arr[RED] = red;
+		arr[YELLOW] = yellow;
+		arr[GREEN] = green;
+		arr[BLUE] = blue;
+		arr[MAGENTA] = magenta;
 	}
 	
 	public boolean[] getChords() {
-		throw new NotImplementedException();
+		return arr; 
 	}
 }

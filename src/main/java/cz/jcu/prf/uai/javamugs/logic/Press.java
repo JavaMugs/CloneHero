@@ -1,18 +1,21 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Press {
-
+	
+	private int color;
+	private double drawTime;
+			
 	public Press(int color, double drawTime) {
-		throw new NotImplementedException();
+		this.color = color;
+		this.drawTime = drawTime;
 	}
 	
 	public int getColor() {
-		throw new NotImplementedException();
+		return this.color;
 	}
 	
 	public double getDrawTime() {
-		throw new NotImplementedException();
+		return this.drawTime;
 	}
 }
