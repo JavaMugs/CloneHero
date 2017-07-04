@@ -1,5 +1,7 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Game {
 
 	public Game(int offset, byte difficulty, PressChart pressChart) {
@@ -7,11 +9,11 @@ public class Game {
 	}
 	
 	public Report tick(double curretTime, Chord chord) {
-		// TODO...
+		throw new NotImplementedException();
 	}
 	
 	public void end() {
-		// TODO...
+		throw new NotImplementedException();
 	}
 
 }
