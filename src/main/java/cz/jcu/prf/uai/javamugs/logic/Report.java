@@ -1,25 +1,24 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class Report {
 
-	private long score;
-	private int multiplier;
+	private Score score;
+	private Chord chordToDraw;
 	
-	public Report() {
-		// TODO Auto-generated constructor stub
+	public Report(Score score, Chord chordToDraw) {
+		this.score = score;
+		this.chordToDraw = chordToDraw;
 	}
 
 	public long getScore() {
-		return score;
+		return score.getScore();
 	}
 	
 	public long getMultiplier() {
-		return multiplier;
+		return score.getMultiplier();
 	}
 	
 	public Chord getChordToDraw() {
-		throw new NotImplementedException();
+		return chordToDraw;
 	}
 }
