@@ -13,9 +13,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
         primaryStage.setTitle("CloneHero");
-        //primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
