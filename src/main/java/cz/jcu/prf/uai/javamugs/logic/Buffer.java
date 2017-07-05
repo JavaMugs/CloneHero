@@ -49,13 +49,14 @@ public class Buffer {
     }
 
     /**
-     * Checks if time exists in list and dequeue Chords from queue if so. Cannot be null.
+     * Checks if time exists in list and dequeue Chords from queue if so.
      *
      * @param pressedKeys Chord of pressed keys from
      * @param pressTime   Time of the press
-     * @return Pair of hits and misses
+     * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
+        // TODO delete by time
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
         double chordTime = -1;
