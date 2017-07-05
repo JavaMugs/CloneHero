@@ -56,9 +56,16 @@ public class Buffer {
      * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
-        // TODO delete by time
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
+        // delete by time
+        for (int i = 0; i < pressTimes.size(); i++) {
+            if(pressTimes.get(i) < minTime) {
+                pressTimes.remove(i);
+                i--;
+                chordQueue.poll();
+            }
+        }
         double chordTime = -1;
         for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time and remove from list
             double time = pressTimes.get(i);

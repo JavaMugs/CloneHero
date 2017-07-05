@@ -32,7 +32,7 @@ public class GameReport {
 	/**
 	 * @return current score multiplier
 	 */
-	public long getMultiplier() {
+	public double getMultiplier() {
 		return score.getMultiplier();
 	}
 	

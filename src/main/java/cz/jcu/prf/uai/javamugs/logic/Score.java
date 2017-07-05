@@ -7,7 +7,7 @@ package cz.jcu.prf.uai.javamugs.logic;
 public class Score {
 
 	private long score;
-	private int multiplier;
+	private double multiplier;
 
 	/**
 	 * Creates game score.
@@ -25,10 +25,24 @@ public class Score {
 	}
 
 	/**
+	 * Sets score to 0.
+	 */
+	public void resetScore() {
+		score = 0;
+	}
+	
+	/**
 	 * @param score added score. It's multiplied by current multiplier.
 	 */
-	public void addScore(long score) {
-		this.score += score*this.multiplier;
+	public void addScore(long number) {
+		score += number*multiplier;
+	}
+	
+	/**
+	 * @return current multiplier
+	 */
+	public double getMultiplier() {
+		return multiplier;
 	}
 	
 	/**
@@ -41,14 +55,7 @@ public class Score {
 	/**
 	 * @param multiplier sets multiplier to new value.
 	 */
-	public void setMultiplier(int multiplier) {
-		this.multiplier = multiplier;
-	}
-	
-	/**
-	 * @return current multiplier
-	 */
-	public int getMultiplier() {
-		return multiplier;
+	public void addMultiplier(double number) {
+		multiplier += number;
 	}
 }
