@@ -56,4 +56,8 @@ public class Game {
 
 		return new GameReport(score, next, report.getExpectedChord());
 	}
+
+	public double getTimeOffset() {
+		return timeOffset;
+	}
 }
