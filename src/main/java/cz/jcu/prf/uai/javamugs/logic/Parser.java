@@ -66,6 +66,7 @@ public class Parser {
             throw new IOException("Unexpected file format");
         }
 
+        openedFile.close();
 
 
         return new PressChart(result);
