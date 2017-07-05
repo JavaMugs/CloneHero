@@ -1,14 +1,11 @@
 package cz.jcu.prf.uai.javamugs.gui;
 
-import cz.jcu.prf.uai.javamugs.App;
 import cz.jcu.prf.uai.javamugs.logic.Game;
 import cz.jcu.prf.uai.javamugs.logic.Parser;
-import cz.jcu.prf.uai.javamugs.logic.Press;
 import cz.jcu.prf.uai.javamugs.logic.PressChart;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,6 +29,7 @@ public class MenuController {
     public VBox rootContainer;
 
     public void start() {
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         this.stage = (Stage) rootContainer.getScene().getWindow();
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
@@ -43,12 +41,18 @@ public class MenuController {
 
     public void playButtonAction(ActionEvent event) {
 
+        fileChooser.setTitle("Select song");
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
         File songFile = fileChooser.showOpenDialog(stage);
         if (songFile == null) {
             return;
         }
         String songURIstring = songFile.toURI().toString();
 
+        fileChooser.setTitle("Select PressChart file");
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PressChart file", "*.prc"));
         File pressChartFile = fileChooser.showOpenDialog(stage);
         if (pressChartFile == null) {
             return;
@@ -97,6 +101,9 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
             EditorController editorController = (EditorController) loader.getController();
+            fileChooser.setTitle("Select song");
+            fileChooser.getExtensionFilters().clear();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
             File songFile = fileChooser.showOpenDialog(stage);
             if (songFile == null) {
                 return;
