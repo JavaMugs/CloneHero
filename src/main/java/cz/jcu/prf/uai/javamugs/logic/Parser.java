@@ -2,6 +2,9 @@ package cz.jcu.prf.uai.javamugs.logic;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,12 +34,12 @@ public class Parser {
 
     /**
      *
-     * @param fileName
-     * @return
-     * @throws IOException:  file is not found, file cannot be opened,
-     * unexpected extension (.prc), file is too large (max 5MB)
+     * @param fileName Path to the file to be opened.
+     * @return Opened reader.
+     * @throws IOException: file is not found, file cannot be opened,
+     *                      unexpected extension (.prc), file is too large (max 5MB)
      */
-	private Stream<String> attemptOpenFile(String fileName) throws IOException {
+	private BufferedReader attemptOpenFile(String fileName) throws IOException {
 
         if (!fileName.endsWith(".prc")) throw new IOException("Unexpected extension");
 
@@ -50,9 +53,12 @@ public class Parser {
             throw new IOException("Access to file denied.");
         }
 
-
-
-        throw new NotImplementedException();
+        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
+            return reader;
+        }
+        catch (IOException e){
+            throw new IOException("Error opening file.");
+        }
     }
 
 }
