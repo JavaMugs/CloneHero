@@ -28,6 +28,7 @@ public class GameController {
     public void start() {
         this.stage = (Stage) rootContainer.getScene().getWindow();
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        //Strings
         gc.setFill(Color.WHITE);
         gc.fillRect(0,0, stage.getWidth(), stage.getHeight());
         gc.setStroke(Color.BLACK);
@@ -37,6 +38,9 @@ public class GameController {
         gc.strokeLine(400, 0, 400, stage.getHeight());
         gc.strokeLine(475, 0, 475, stage.getHeight());
         gc.strokeLine(550, 0, 550, stage.getHeight());
+        //Circles
+        gc.setFill(CloneHeroColors.RED);
+        gc.fillOval(225, stage.getHeight() - 25, 50, 50);
 
         final long startNanoTime = System.nanoTime();
 
