@@ -21,12 +21,11 @@ public class App extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Menu.fxml"));
             Parent root = loader.load();
             MenuController controller = (MenuController) loader.getController();
-            controller.setStage(primaryStage);
-
             primaryStage.setTitle("Clone Hero");
             primaryStage.setScene(new Scene(root));
             primaryStage.setResizable(false);
             primaryStage.show();
+            controller.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
