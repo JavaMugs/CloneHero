@@ -14,7 +14,7 @@ public class Score {
 	 */
 	public Score() {
 		score = 0;
-		multiplier = 1;
+		multiplier = 1.0;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Score {
 	 * Sets multiplier to 1.
 	 */
 	public void resetMultiplier() {
-		multiplier = 1;
+		multiplier = 1.0;
 	}
 	
 	/**
