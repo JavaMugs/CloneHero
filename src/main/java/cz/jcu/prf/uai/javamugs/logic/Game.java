@@ -44,7 +44,7 @@ public class Game {
 
 		if (report.getHit() > 0) {
 			score.addScore(SCORE_BASE * report.getHit());
-			score.addMultiplier(MULTIPLIER_BASE * report.getHit());
+			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
 		return new GameReport(score, next, report.getExpectedChord());
