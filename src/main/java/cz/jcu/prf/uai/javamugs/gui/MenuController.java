@@ -94,7 +94,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
-            GameController editorController = (EditorController) loader.getController();
+            EditorController editorController = (EditorController) loader.getController();
             Stage editorStage = new Stage();
             editorStage.setTitle("Clone Hero Editor");
             editorStage.setScene(new Scene(root));
