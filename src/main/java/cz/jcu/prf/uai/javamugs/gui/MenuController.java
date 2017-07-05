@@ -62,7 +62,7 @@ public class MenuController {
         try {
             pressChart = parser.parseFile(pressChartPath, timeOffset);
         } catch(Exception ex) {
-            // TODO change exceptions
+            ex.printStackTrace();
             return;
         }
 
@@ -100,6 +100,12 @@ public class MenuController {
             editorStage.setTitle("Clone Hero Editor");
             editorStage.setScene(new Scene(root));
             editorStage.show();
+            File songFile = fileChooser.showOpenDialog(stage);
+            if (songFile == null) {
+                return;
+            }
+            editorController.setSongPath(songFile.toURI().toString());
+
             editorController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
         }
