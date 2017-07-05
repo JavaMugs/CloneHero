@@ -41,7 +41,7 @@ public class GameTest extends TestCase {
 		long expectedScore = 0;
 		
 		for (int i = 0; i < 5; i++) {
-			report = game.tick(currentTime, null);
+			report = game.tick(currentTime, userInput);
 			assertEquals(expectedScore, report.getScore());
 			assertEquals(1.0, report.getMultiplier());
 			currentTime += 100;
