@@ -44,8 +44,10 @@ public class Buffer {
      * @param pressTime time to when the chord should be pressed
      */
     public void addToBuffer(Chord chord, double pressTime) {
-        chordQueue.add(chord);
-        pressTimes.add(pressTime);
+        if(!chord.isEmpty()) {
+            chordQueue.add(chord);
+            pressTimes.add(pressTime);
+        }
     }
 
     /**
@@ -60,15 +62,6 @@ public class Buffer {
         double maxTime = pressTime + tolerance;
         int hits = 0;
         int misses = 0;
-        // delete by time
-        for (int i = 0; i < pressTimes.size(); i++) {
-            if(pressTimes.get(i) < minTime) {
-                pressTimes.remove(i);
-                i--;
-                chordQueue.poll();
-                misses++;
-            }
-        }
         double chordTime = -1;
         int chordTimeIndex = -1;
         for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time
@@ -77,6 +70,15 @@ public class Buffer {
                 chordTime = time;
                 chordTimeIndex = i;
                 break;
+            }
+        }
+        // delete by time
+        for (int i = 0; i < pressTimes.size(); i++) {
+            if(pressTimes.get(i) < chordTime - tolerance) {
+                pressTimes.remove(i);
+                i--;
+                chordQueue.poll();
+                misses++;
             }
         }
         Chord expectedChord;
