@@ -10,39 +10,39 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.EditorController">
    <right>
-      <TableView minWidth="0.0" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tablePresses" minWidth="0.0" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="Button" />
-          <TableColumn prefWidth="75.0" text="Time" />
+          <TableColumn fx:id="buttonCol" prefWidth="75.0" text="Button" />
+          <TableColumn fx:id="timeCol" prefWidth="75.0" text="Time" />
         </columns>
       </TableView>
    </right>
    <center>
       <BorderPane maxWidth="350.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <left>
-            <Circle fill="#e00d0d" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+            <Circle fx:id="circle0" fill="#e00d0d" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <Circle fill="#d811cb" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+            <Circle fx:id="circle4" fill="#d811cb" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
          </right>
          <center>
             <BorderPane maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <left>
-                  <Circle fill="YELLOW" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+                  <Circle fx:id="circle1" fill="YELLOW" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
                </left>
                <center>
-                  <Circle fill="#20aa22" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+                  <Circle fx:id="circle2" fill="#20aa22" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
                </center>
                <right>
-                  <Circle fill="#0083ff" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+                  <Circle fx:id="circle3" fill="#0083ff" radius="20.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
                </right>
             </BorderPane>
          </center>
          <bottom>
-            <Button mnemonicParsing="false" text="Start" BorderPane.alignment="CENTER" />
+            <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startBtnAction" text="Start" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
-            <Label maxHeight="50.0" minHeight="0.0" prefHeight="40.0" text="5" BorderPane.alignment="CENTER">
+            <Label fx:id="countLabel" maxHeight="50.0" minHeight="0.0" prefHeight="40.0" text="Editor" BorderPane.alignment="CENTER">
                <font>
                   <Font size="25.0" />
                </font>

@@ -1,5 +1,6 @@
 package cz.jcu.prf.uai.javamugs;
 
+import cz.jcu.prf.uai.javamugs.gui.EditorController;
 import cz.jcu.prf.uai.javamugs.gui.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +19,10 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
-            MenuController controller = (MenuController) loader.getController();
-            controller.setStage(primaryStage);
+            EditorController controller = (EditorController) loader.getController();
+            //controller.setStage(primaryStage);
 
             primaryStage.setTitle("Clone Hero");
             primaryStage.setScene(new Scene(root));
