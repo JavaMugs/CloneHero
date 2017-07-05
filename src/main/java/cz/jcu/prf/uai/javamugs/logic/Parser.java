@@ -1,8 +1,6 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,10 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.io.File.separator;
 
 
 public class Parser {

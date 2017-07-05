@@ -7,6 +7,7 @@ import junit.framework.TestCase;
  */
 public class ParserTest extends TestCase {
     public void testParseFile() throws Exception {
+    PressTest test;
 
 
     }
