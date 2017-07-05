@@ -12,6 +12,7 @@ public class Buffer {
     private Queue<Chord> chordQueue;
     private List<Double> pressTimes;
     private int tolerance;
+    private Hashtable<Chord, Boolean> chordIsHitTable; //TODO
 
     /**
      * Creates Buffer with set difficulty
@@ -94,7 +95,6 @@ public class Buffer {
                     i--;
                     misses++;
                     chordQueue.poll();
-                    System.out.println(Arrays.toString(expectedChord.getChords()));
                 }
             }
         }
