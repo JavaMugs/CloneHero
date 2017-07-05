@@ -43,7 +43,7 @@ public class Buffer {
      * @param PressTime Time of the press
      * @return Pair of hits and misses
      */
-    public Pair check(Chord pressedKeys, long PressTime) {
+    public BufferReport check(Chord pressedKeys, long PressTime) {
         //TODO
         throw new NotImplementedException();
     }
@@ -60,37 +60,5 @@ public class Buffer {
      */
     public int getTimesCount() {
         return pressTimes.size();
-    }
-
-    /**
-     * Pair of hites and misses
-     */
-    public class Pair {
-        private int hit;
-        private int miss;
-
-        /**
-         * Creates pair of hits and misses
-         * @param hit number of hits
-         * @param miss number of misses
-         */
-        public Pair(int hit, int miss) {
-            this.hit = hit;
-            this.miss = miss;
-        }
-
-        /**
-         * @return Hit count
-         */
-        public int getHit() {
-            return hit;
-        }
-
-        /**
-         * @return Miss count
-         */
-        public int getMiss() {
-            return miss;
-        }
     }
 }
