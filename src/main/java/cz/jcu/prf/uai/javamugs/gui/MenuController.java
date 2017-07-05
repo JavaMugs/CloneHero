@@ -70,15 +70,16 @@ public class MenuController {
 
         Game game = new Game(timeOffset, (byte)difficulty, pressChart);
 
-        openGameWindow(game); //TODO put method under logic
+        openGameWindow(game, songURIstring); //TODO put method under logic
     }
 
-    private void openGameWindow(Game game) {
+    private void openGameWindow(Game game, String songURIstring) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
             Parent root = loader.load();
             GameController gameController = (GameController) loader.getController();
             gameController.setGame(game);
+            gameController.setSongURIstring(songURIstring);
             Stage gameStage = new Stage();
             gameStage.setTitle("Clone Hero");
             gameStage.setScene(new Scene(root));
