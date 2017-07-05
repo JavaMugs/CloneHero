@@ -8,18 +8,21 @@ public class GameReport {
 
 	private Score score;
 	private Chord chordToDraw;
-	private Chord expectedChord;
+	private Chord hitChord;
+	private Chord missChord;
 	
 	/**
 	 * Creates report of game status.
 	 * @param score actual score. Never null.
 	 * @param chordToDraw next chord to draw.
-	 * @param expectedChord chord expected to be pressed.
+	 * @param hitChord chord with hits
+	 * @param missChord chord with hits
 	 */
-	public GameReport(Score score, Chord chordToDraw, Chord expectedChord) {
+	public GameReport(Score score, Chord chordToDraw, Chord hitChord, Chord missChord) {
 		this.score = score;
 		this.chordToDraw = chordToDraw;
-		this.expectedChord = expectedChord;
+		this.hitChord = hitChord;
+		this.missChord = missChord;
 	}
 
 	/**
@@ -44,9 +47,16 @@ public class GameReport {
 	}
 
 	/**
-	 * @return this chord was expected to be pressed
+	 * @return Chord where true is miss
 	 */
-	public Chord getExpectedChord() {
-		return expectedChord;
+	public Chord getHitChord() {
+		return hitChord;
+	}
+
+	/**
+	 * @return Chord where true is hit
+	 */
+	public Chord getMissChord() {
+		return missChord;
 	}
 }

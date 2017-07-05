@@ -47,7 +47,7 @@ public class Game {
 			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
-		return new GameReport(score, next, report.getExpectedChord());
+		return new GameReport(score, next, report.getHitChord(), report.getMissChord());
 	}
 	
 	public double getTimeOffset() {

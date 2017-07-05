@@ -10,7 +10,8 @@ package cz.jcu.prf.uai.javamugs.logic;
 public class BufferReport {
     private int hit;
     private int miss;
-    private Chord expectedChord;
+    private Chord hitChord;
+    private Chord missChord;
 
     /**
      * Creates pair of hits and misses
@@ -18,10 +19,17 @@ public class BufferReport {
      * @param hit  number of hits
      * @param miss number of misses
      */
-    public BufferReport(int hit, int miss, Chord expectedChord) {
-        this.hit = hit;
-        this.miss = miss;
-        this.expectedChord = expectedChord;
+    public BufferReport(int hit, int miss, Chord hitChord, Chord missChord) {
+        this.hit = 0;
+        for (int i = 0; i < hitChord.getChords().length; i++) {
+            if(hitChord.getChords()[i]) this.hit++;
+        }
+        this.miss = 0;
+        for (int i = 0; i < missChord.getChords().length; i++) {
+            if(missChord.getChords()[i]) this.miss++;
+        }
+        this.hitChord = hitChord;
+        this.missChord = missChord;
     }
 
     /**
@@ -39,9 +47,16 @@ public class BufferReport {
     }
 
     /**
-     * @return Expected Chord
+     * @return Chord where true is miss
      */
-    public Chord getExpectedChord() {
-        return expectedChord;
+    public Chord getHitChord() {
+        return hitChord;
+    }
+
+    /**
+     * @return Chord where true is hit
+     */
+    public Chord getMissChord() {
+        return missChord;
     }
 }

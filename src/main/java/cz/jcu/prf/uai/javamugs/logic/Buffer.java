@@ -9,10 +9,8 @@ import java.util.*;
  */
 public class Buffer {
 
-    private Queue<Chord> chordQueue;
-    private List<Double> pressTimes;
+    private ArrayList<BufferRecord> bufferRecords;
     private int tolerance;
-    private Hashtable<Chord, Boolean> chordIsHitTable; //TODO
 
     /**
      * Creates Buffer with set difficulty
@@ -20,8 +18,7 @@ public class Buffer {
      * @param difficulty 1-3 - tolerance of hits and misses
      */
     public Buffer(byte difficulty) {
-        chordQueue = new LinkedList<Chord>();
-        pressTimes = new ArrayList<Double>();
+        bufferRecords = new ArrayList<BufferRecord>();
         switch (difficulty) {
             case 1:
                 this.tolerance = 150;
@@ -43,8 +40,7 @@ public class Buffer {
      */
     public void addToBuffer(Chord chord, double pressTime) {
         if(!chord.isEmpty()) {
-            chordQueue.add(chord);
-            pressTimes.add(pressTime);
+            bufferRecords.add(new BufferRecord(chord, pressTime));
         }
     }
 
@@ -56,7 +52,7 @@ public class Buffer {
      * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
-        double minTime = pressTime - tolerance;
+        /*double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
         int hits = 0;
         int misses = 0;
@@ -97,21 +93,89 @@ public class Buffer {
                     chordQueue.poll();
                 }
             }
+        }*/
+        double minTime = pressTime - tolerance;
+        double maxTime = pressTime + tolerance;
+        ArrayList<BufferRecord> expectedBufferRecords = new ArrayList<BufferRecord>();
+        for (BufferRecord bufferRecord : bufferRecords) { // get expected chords
+            double time = bufferRecord.getTime();
+            if (time > minTime && time < maxTime) {
+                expectedBufferRecords.add(bufferRecord);
+            }
         }
-        return new BufferReport(hits, misses, expectedChord);
+        int misses = 0;
+        Chord hitChord = new Chord(false, false, false, false, false);
+        Chord missChord = new Chord(false, false, false, false, false);
+        for (BufferRecord expectedBufferRecord : expectedBufferRecords) {
+            expectedBufferRecord.checkHits(pressedKeys);
+            misses = expectedBufferRecord.checkUnexpectedPresses(pressedKeys);
+            for (int i = 0; i < hitChord.getChords().length; i++) {
+                if(expectedBufferRecord.getChord().getChords()[i]) hitChord.getChords()[i] = true;
+            }
+        }
+
+
+        //return new BufferReport(hits, misses, expectedChord);
+        return null
     }
 
     /**
      * @return size of Chord queue
      */
     public int getChordCount() {
-        return chordQueue.size();
+        return bufferRecords.size();
     }
 
     /**
      * @return size of times list
      */
     public int getTimesCount() {
-        return pressTimes.size();
+        return bufferRecords.size();
+    }
+
+    private class BufferRecord {
+        private Chord chord;
+        private double time;
+        private int hits;
+
+        public BufferRecord(Chord chord, double time) {
+            this.chord = chord;
+            this.time = time;
+            this.hits = 0;
+        }
+
+        public int getMisses() {
+            int expectedHits = 0;
+            for(boolean string : chord.getChords()) {
+                if(string) expectedHits++;
+            }
+            return expectedHits - hits;
+        }
+
+        public void checkHits(Chord pressedChord) {
+            for(int i = 0; i < chord.getChords().length; i++) {
+                if(chord.getChords()[i] && pressedChord.getChords()[i]) hits++;
+            }
+        }
+
+        public int  checkUnexpectedPresses(Chord pressedChord) {
+            int misses = 0;
+            for(int i = 0; i < chord.getChords().length; i++) {
+                if(!chord.getChords()[i] && pressedChord.getChords()[i]) misses++;
+            }
+            return misses;
+        }
+
+        public double getTime() {
+            return time;
+        }
+
+        public int getHits() {
+            return hits;
+        }
+
+        public Chord getChord() {
+            return chord;
+        }
     }
 }
