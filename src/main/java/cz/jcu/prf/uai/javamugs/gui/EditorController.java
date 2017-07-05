@@ -2,6 +2,7 @@ package cz.jcu.prf.uai.javamugs.gui;
 
 import cz.jcu.prf.uai.javamugs.logic.Chord;
 import cz.jcu.prf.uai.javamugs.logic.Press;
+import cz.jcu.prf.uai.javamugs.logic.Saver;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -21,15 +22,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.security.InvalidParameterException;
 
 
 public class EditorController {
 
+    private Press actualPress;
+    private Saver saver;
     private MediaPlayer mediaPlayer;
     private String songPath;
+    private boolean isRecording;
     public Label countLabel;
     public Circle circle0;
     public Circle circle1;
@@ -95,30 +101,35 @@ public class EditorController {
      * Start listen keys to press
      */
     private void startListenButtons(){
+        saver = new Saver();
+
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
                     case A:
+                        actualPress = new Press(Chord.RED, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle0);
-                        setNewPressToTextarea(new Press(Chord.RED, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case S:
+                        actualPress = new Press(Chord.YELLOW, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle1);
-                        setNewPressToTextarea(new Press(Chord.YELLOW, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case D:
+                        actualPress = new Press(Chord.GREEN, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle2);
-                        setNewPressToTextarea(new Press(Chord.GREEN, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case K:
+                        actualPress = new Press(Chord.BLUE, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle3);
-                        setNewPressToTextarea(new Press(Chord.BLUE, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case L:
+                        actualPress = new Press(Chord.MAGENTA, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle4);
-                        setNewPressToTextarea(new Press(Chord.MAGENTA, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                 }
+
+                setNewPressToTextarea(actualPress);
+                saver.addPress(actualPress);
             }
         });
     }
@@ -127,6 +138,15 @@ public class EditorController {
      * Start view
      */
     public void start() {
+        Stage stage = (Stage) startBtn.getScene().getWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                mediaPlayer.stop();
+                mediaPlayer = null;
+            }
+        });
+
+        isRecording = false;
         textPresses.setDisable(true);
     }
 
@@ -135,12 +155,40 @@ public class EditorController {
      * @param event
      */
     public void startBtnAction(ActionEvent event){
-        countLabel.setText("Recording");
-        startBtn.setVisible(false);
+        if(!isRecording){
+            countLabel.setText("Recording");
+            startBtn.setText("Stop");
+            isRecording = true;
 
-        Media sound = new Media(this.songPath);
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
+            Media sound = new Media(this.songPath);
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        }else{
+            countLabel.setText("Editor");
+            startBtn.setText("Start");
+            isRecording = false;
+
+            mediaPlayer.stop();
+            mediaPlayer = null;
+
+            try{
+                saver.save(songPath.replace(".mp3", ""));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+
+            public void run() {
+                try{
+                    saver.save(songPath.replace(".mp3", ""));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
         startListenButtons();
     }
 
