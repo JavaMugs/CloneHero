@@ -11,11 +11,14 @@ import javafx.scene.control.Button;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -33,6 +36,7 @@ public class GameController {
     private ArrayList<BallAnimation> ballAnimations;
     private AnimationTimer mainCycle;
     private int[] highlightedStrings = new int[5];
+    private int[] lights = new int[5];
 
     public Canvas canvas;
     public BorderPane rootContainer;
@@ -94,14 +98,19 @@ public class GameController {
             @Override
             public void handle(long currentNanoTime) {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                if(!report.getHitChord().isEmpty()) {
-                    int ik = 1+1;
-                }
                 for (int i = 0; i < highlightedStrings.length; i++) {
-                    if (report.getHitChord().getChords()[i])
+                    if (report.getHitChord().getChords()[i]) {
                         highlightedStrings[i] = 20;
-                    if (report.getMissChord().getChords()[i])
+                    }
+                    if (report.getMissChord().getChords()[i]) {
                         highlightedStrings[i] = -20;
+                    }
+                    if (lights[i] > 0 && pressedButtons.getChords()[i]) {
+                        lights[i] = 0;
+                    } else if (report.getHitChord().getChords()[i] || report.getMissChord().getChords()[i]) {
+                        lights[i] = 120;
+                    }
+
                 }
                 if (!report.getChordToDraw().isEmpty()) {
                     boolean[] chordArr = report.getChordToDraw().getChords();
@@ -122,8 +131,11 @@ public class GameController {
 
     private void renderCanvas(GameReport report) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        try {
+            gc.drawImage(new Image(getClass().getResource("/bg.jpg").toURI().toString()), 0, 0);
+        } catch (java.net.URISyntaxException e) {
+            e.printStackTrace();
+        }
         Random random = new Random();
         for (int i = 0; i < highlightedStrings.length; i++) {
             //Strings
@@ -133,13 +145,13 @@ public class GameController {
                 gc.setStroke(Color.web("#00FF00"));
                 highlightedStrings[i]--;
                 int randomInt = random.nextInt(6);
-                randomInt -= randomInt/2;
+                randomInt -= randomInt / 2;
                 x += randomInt;
             } else if (highlightedStrings[i] < 0) {
                 gc.setStroke(Color.web("#FF0000"));
                 highlightedStrings[i]++;
             } else
-                gc.setStroke(Color.BLACK);
+                gc.setStroke(Color.WHITE);
             gc.strokeLine(x, 0, x, canvas.getHeight());
             //Circles
             gc.setFill(CloneHeroColors.COLORARRAY[i]);
@@ -147,6 +159,48 @@ public class GameController {
             x = 225 + i * 75;
             gc.fillOval(x, canvas.getHeight() - 75, 50, 50);
             gc.strokeOval(x, canvas.getHeight() - 75, 50, 50);
+
+            gc.setStroke(Color.BLACK);
+            gc.setFill(gc.getStroke());
+            gc.setFont(Font.font(30));
+            gc.setTextAlign(TextAlignment.CENTER);
+            String text = "";
+            switch (i) {
+                case 0:
+                    text = "A";
+                    break;
+                case 1:
+                    text = "S";
+                    break;
+                case 2:
+                    text = "D";
+                    break;
+                case 3:
+                    text = "K";
+                    break;
+                case 4:
+                    text = "L";
+                    break;
+            }
+            gc.fillText(text, x + 25, canvas.getHeight() - 40);
+
+            if (lights[i] > 0) {
+                lights[i]--;
+                Color color = CloneHeroColors.COLORARRAY[i];
+                gc.setFill(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0.2));
+                gc.fillPolygon(
+                        new double[]{
+                                i * (canvas.getWidth() / (lights.length - 1)),
+                                0,
+                                canvas.getWidth()
+                        },
+                        new double[]{
+                                -50,
+                                canvas.getHeight() + 1500,
+                                canvas.getHeight() + 1500
+                        },
+                        3);
+            }
         }
         scoreLabel.setText(String.valueOf(report.getScore()) + "\n" + String.valueOf(report.getMultiplier() + "x"));
         for (int i = 0; i < ballAnimations.size(); i++) {
@@ -168,7 +222,7 @@ public class GameController {
 
         public BallAnimation(int color, double timeOffset, double startTime) {
             this.color = color;
-            this.y = 0;
+            this.y = -50;
             finished = false;
             this.startTime = startTime;
             this.endTime = startTime + timeOffset;
@@ -176,11 +230,11 @@ public class GameController {
 
         public void animate(double currentTime) {
             double ratio = (currentTime - startTime) / (endTime - startTime);
-            this.y = (canvas.getHeight() - 75) * ratio;
+            this.y = (canvas.getHeight() - 25) * ratio - 50;
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.setFill(CloneHeroColors.COLORARRAY[color]);
             gc.fillOval(225 + 75 * color, y, 50, 50);
-            if (currentTime >= endTime) {
+            if (currentTime >= endTime + 500) {
                 finished = true;
             }
         }
