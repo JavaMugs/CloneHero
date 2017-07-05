@@ -10,6 +10,14 @@ public class Chord {
 	public static final int BLUE = 3;
 	public static final int MAGENTA = 4;
 
+	/**
+	 * Constructor, set up all variables
+	 * @param red color
+	 * @param yellow color
+	 * @param green color
+	 * @param blue color
+	 * @param magenta color
+	 */
 	public Chord(boolean red, boolean yellow, boolean green, boolean blue, boolean magenta) {
 		arr[RED] = red;
 		arr[YELLOW] = yellow;
@@ -17,7 +25,11 @@ public class Chord {
 		arr[BLUE] = blue;
 		arr[MAGENTA] = magenta;
 	}
-	
+
+	/**
+	 * Get array of chords
+	 * @return boolean array size of 5
+	 */
 	public boolean[] getChords() {
 		return arr; 
 	}
