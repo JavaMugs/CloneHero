@@ -1,10 +1,14 @@
 package cz.jcu.prf.uai.javamugs;
 
+import cz.jcu.prf.uai.javamugs.gui.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
 public class App extends Application {
 
     public static void main(String[] args) {
@@ -13,10 +17,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
-        primaryStage.setTitle("CloneHero");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menu.fxml"));
+            Parent root = loader.load();
+            MenuController controller = (MenuController) loader.getController();
+            controller.setStage(primaryStage);
+
+            primaryStage.setTitle("Clone Hero");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
