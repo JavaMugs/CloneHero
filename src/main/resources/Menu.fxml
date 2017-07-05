@@ -7,50 +7,55 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.MenuController">
-   <children>
-      <BorderPane>
-         <left>
-            <Label text="Speed" BorderPane.alignment="CENTER" />
-         </left>
+<BorderPane fx:id="rootContainer" prefHeight="600.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.MenuController">
+   <bottom>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <right>
-            <Label fx:id="speedLabel" BorderPane.alignment="CENTER" />
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane>
+                     <left>
+                        <Label text="Speed" textFill="WHITE" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Label fx:id="speedLabel" textFill="WHITE" BorderPane.alignment="CENTER" />
+                     </right>
+                     <bottom>
+                        <Slider fx:id="speedSlider" blockIncrement="250.0" majorTickUnit="300.0" max="3500.0" min="500.0" showTickMarks="true" snapToTicks="true" value="2000.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <BorderPane>
+                     <left>
+                        <Label text="Difficulty" textFill="WHITE" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Label fx:id="difficultyLabel" textFill="WHITE" BorderPane.alignment="CENTER" />
+                     </right>
+                     <bottom>
+                        <Slider fx:id="difficultySlider" blockIncrement="1.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="2.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </BorderPane>
+                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#playButtonAction" prefWidth="200.0" text="Play">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#editorButtonAction" prefWidth="200.0" text="Editor">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" prefWidth="200.0" text="Exit" />
+               </children>
+               <padding>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
          </right>
-         <bottom>
-            <Slider fx:id="speedSlider" blockIncrement="250.0" majorTickUnit="300.0" max="3500.0" min="500.0" showTickMarks="true" snapToTicks="true" value="2000.0" BorderPane.alignment="CENTER" />
-         </bottom>
       </BorderPane>
-      <BorderPane>
-         <left>
-            <Label text="Difficulty" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Label fx:id="difficultyLabel" BorderPane.alignment="CENTER" />
-         </right>
-         <bottom>
-            <Slider fx:id="difficultySlider" blockIncrement="1.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="2.0" BorderPane.alignment="CENTER" />
-         </bottom>
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </BorderPane>
-      <Button fx:id="playButton" mnemonicParsing="false" onAction="#playButtonAction" prefWidth="200.0" text="Play">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </Button>
-      <Button mnemonicParsing="false" onAction="#editorButtonAction" prefWidth="200.0" text="Editor">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </Button>
-      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" prefWidth="200.0" text="Exit">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </Button>
-   </children>
-   <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-   </padding>
-</VBox>
+   </bottom>
+</BorderPane>

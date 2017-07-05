@@ -11,7 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -26,9 +29,10 @@ public class MenuController {
     public Slider difficultySlider;
     public Button exitButton;
     public FileChooser fileChooser = new FileChooser();
-    public VBox rootContainer;
+    public BorderPane rootContainer;
 
     public void start() {
+        rootContainer.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/splash.jpg").toString()), null, null, null, null)));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         this.stage = (Stage) rootContainer.getScene().getWindow();
         difficultyLabel.textProperty().bind(
@@ -40,7 +44,6 @@ public class MenuController {
     }
 
     public void playButtonAction(ActionEvent event) {
-
         fileChooser.setTitle("Select song");
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));

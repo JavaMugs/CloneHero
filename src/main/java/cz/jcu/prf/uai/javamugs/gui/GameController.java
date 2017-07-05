@@ -7,9 +7,11 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -81,7 +83,6 @@ public class GameController {
                         pressedButtons.getChords()[4] = true;
                         break;
                 }
-                System.out.println(Arrays.toString(pressedButtons.getChords()));
             }
         });
 
@@ -122,20 +123,32 @@ public class GameController {
                 }
                 renderCanvas(report);
                 pressedButtons = new Chord(false, false, false, false, false);
+                if(mediaPlayer.getCurrentTime().toMillis() >= mediaPlayer.getTotalDuration().toMillis()) {
+                    stop();
+                    end(report);
+                }
             }
         };
         mainCycle.start();
+    }
 
-
+    private void end(GameReport lastReport) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Clone Hero");
+        alert.setHeaderText("You've completed this song!");
+        alert.setContentText("Your score: " + lastReport.getScore());
+        alert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+            @Override
+            public void handle(DialogEvent event) {
+                stage.hide();
+            }
+        });
+        alert.show();
     }
 
     private void renderCanvas(GameReport report) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        try {
-            gc.drawImage(new Image(getClass().getResource("/bg.jpg").toURI().toString()), 0, 0);
-        } catch (java.net.URISyntaxException e) {
-            e.printStackTrace();
-        }
+        gc.drawImage(new Image(getClass().getResource("/bg.jpg").toString()), 0, 0);
         Random random = new Random();
         for (int i = 0; i < highlightedStrings.length; i++) {
             //Strings
