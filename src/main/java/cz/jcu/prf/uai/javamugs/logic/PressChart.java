@@ -48,6 +48,7 @@ public class PressChart {
 
 		while(i < presses.length && presses[i].getDrawTime() < currentTime) {
 			arr[presses[i].getColor()] = true;
+
 			i++;
 		};
 
