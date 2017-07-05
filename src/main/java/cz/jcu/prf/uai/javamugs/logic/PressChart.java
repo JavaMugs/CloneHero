@@ -37,6 +37,8 @@ public class PressChart {
 	 * @return Chord
 	 */
 	public Chord next(double currentTime) {
+
+
 		if(this.lastCalledItem != 0 && currentTime<presses[this.lastCalledItem].getDrawTime())
 			throw new InvalidParameterException();
 
