@@ -6,9 +6,9 @@ package cz.jcu.prf.uai.javamugs.logic;
  */
 public class Game {
 
-	private static final int SCORE_BASE = 100;
-	private static final int HITS_IN_ROW_MULTIPLY = 5;
-	private static final double MULTIPLIER_BASE = 0.1;
+	public static final int SCORE_BASE = 100;
+	public static final int HITS_IN_ROW_MULTIPLY = 5;  // fix GameTest after changing this
+	public static final double MULTIPLIER_BASE = 0.1;
 
 	private double timeOffset;
 	private PressChart pressChart;
@@ -41,7 +41,11 @@ public class Game {
 		{
 			buffer.addToBuffer(next, currentTime+timeOffset);
 		}
-		BufferReport report = buffer.check(chord, currentTime);
+		BufferReport report;
+		if (chord == null)
+			report = buffer.check(new Chord(false, false, false, false, false), currentTime);
+		else
+			report = buffer.check(chord, currentTime);
 
 		hitsInRow += report.getHit();
 		if (report.getMiss() > 0)
