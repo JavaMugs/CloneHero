@@ -33,4 +33,17 @@ public class Chord {
 	public boolean[] getChords() {
 		return arr; 
 	}
+
+	/**
+	 * Check if is everything false
+	 */
+	public boolean isEmpty(){
+		for(int i = 0; i<arr.length;i++){
+			if(arr[i]==true){
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

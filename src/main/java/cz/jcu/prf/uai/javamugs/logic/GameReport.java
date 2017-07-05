@@ -13,8 +13,8 @@ public class GameReport {
 	/**
 	 * Creates report of game status.
 	 * @param score actual score. Never null.
-	 * @param chordToDraw next chord to draw or null.
-	 * @param expectedChord chord expected to be pressed or null.
+	 * @param chordToDraw next chord to draw.
+	 * @param expectedChord chord expected to be pressed.
 	 */
 	public GameReport(Score score, Chord chordToDraw, Chord expectedChord) {
 		this.score = score;
@@ -37,14 +37,14 @@ public class GameReport {
 	}
 	
 	/**
-	 * @return this chord should be drawn, possibly null
+	 * @return this chord should be drawn
 	 */
 	public Chord getChordToDraw() {
 		return chordToDraw;
 	}
 
 	/**
-	 * @return this chord was expected to be pressed, possibly null
+	 * @return this chord was expected to be pressed
 	 */
 	public Chord getExpectedChord() {
 		return expectedChord;
