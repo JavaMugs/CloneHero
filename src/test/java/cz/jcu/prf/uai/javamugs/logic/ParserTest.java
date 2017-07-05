@@ -14,10 +14,17 @@ public class ParserTest extends TestCase {
 
         try{
             chart = parser.parseFile(path, timeOffset);
+
+            Chord nextchord = chart.next(50000);
+            while(!nextchord.isEmpty()){
+                System.out.println(nextchord.getChords());
+                nextchord = chart.next(50000);
+            }
         }
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+
 
 
 
