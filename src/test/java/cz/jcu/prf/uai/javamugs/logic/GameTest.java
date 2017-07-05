@@ -25,26 +25,31 @@ public class GameTest extends TestCase {
 		presses.add(new Press(Chord.MAGENTA,  800.0));
 		presses.add(new Press(Chord.MAGENTA,  900.0));
         presses.add(new Press(Chord.BLUE,    1000.0));
-        presses.add(new Press(Chord.YELLOW,  1100.0));
-        presses.add(new Press(Chord.MAGENTA, 1200.0));
+        presses.add(new Press(Chord.MAGENTA, 1100.0));
+        presses.add(new Press(Chord.BLUE,    1200.0));
         presses.add(new Press(Chord.BLUE,    1300.0));
-        presses.add(new Press(Chord.BLUE,    1400.0));
-        presses.add(new Press(Chord.RED,     1500.0));
+        presses.add(new Press(Chord.RED,     1400.0));
 		
         PressChart pressChart = new PressChart(presses);
 		Game game = new Game(TIME_OFFSET, DIFFICULTY, pressChart);
 		assertNotNull(game);
 		
 		Chord userInput = new Chord(false, false, false, false, true);  // MAGENTA
+		Chord emptyInput = new Chord(false, false, false, false, false);
 		GameReport report;
 		double currentTime = 0;
 		long expectedScore = 0;
 		
-		for (int i = 0; i < 5; i++) {
+		report = game.tick(currentTime, emptyInput);
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(1.0, report.getMultiplier());
+		currentTime += 50;
+		
+		for (int i = 0; i < 8; i++) {
 			report = game.tick(currentTime, userInput);
 			assertEquals(expectedScore, report.getScore());
 			assertEquals(1.0, report.getMultiplier());
-			currentTime += 100;
+			currentTime += 50;
 		}
 		
 		for (int i = 0; i < 4; i++) {
@@ -63,7 +68,7 @@ public class GameTest extends TestCase {
 			currentTime += 100;
 		}
 		
-		report = game.tick(currentTime, userInput);
+		report = game.tick(currentTime, emptyInput);
 		assertEquals(expectedScore, report.getScore());
 		assertEquals(1.0, report.getMultiplier());
 		currentTime += 100;
