@@ -15,10 +15,12 @@ public class ParserTest extends TestCase {
         try{
             chart = parser.parseFile(path, timeOffset);
 
-            Chord nextchord = chart.next(50000);
-            while(!nextchord.isEmpty()){
-                System.out.println(nextchord.getChords());
-                nextchord = chart.next(50000);
+            Chord nextChord = chart.next(50000);
+            while(!nextChord.isEmpty()){
+                for (int i = 0; i < nextChord.getChords().length; i++) {
+                    System.out.println(nextChord.getChords()[i]);
+                }
+                nextChord = chart.next(50000);
             }
         }
         catch (Exception e){

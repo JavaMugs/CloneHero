@@ -24,12 +24,17 @@ public class GameController {
     private Game game;
     private MediaPlayer mediaPlayer;
     private Chord pressedButtons;
+    private String songURIstring;
 
     public Canvas canvas;
     public BorderPane rootContainer;
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void setSongURIstring(String songURIstring) {
+        this.songURIstring = songURIstring;
     }
 
     public void start() {
@@ -87,7 +92,7 @@ public class GameController {
             }
         });
 
-        Media sound = new Media(new File("song.mp3").toURI().toString());
+        Media sound = new Media(songURIstring);
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
 
@@ -98,7 +103,9 @@ public class GameController {
             public void handle(long currentNanoTime)
             {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                System.out.println(report.getScore());
+                if(!report.getChordToDraw().isEmpty()) {
+                    System.out.println(report.getChordToDraw());
+                }
 
                 pressedButtons = new Chord(false, false, false, false, false);
             }

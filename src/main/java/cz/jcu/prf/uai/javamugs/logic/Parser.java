@@ -41,6 +41,7 @@ public class Parser {
 
 
 
+
         List<List<String>> parsedFile = openedFile.lines()
                                                     .map(line -> Arrays.asList(line.split(SEPARATOR)))
                                                     .collect(Collectors.toList());
@@ -55,7 +56,7 @@ public class Parser {
                 hitTime = Double.parseDouble(line.get(0));
                 drawTime = hitTime - timeOffset;
                 if(drawTime < 0.0) continue;
-                int color = Integer.parseInt(line.get(0));
+                int color = Integer.parseInt(line.get(1));
                 if (color < COLOR_MIN || color > COLOR_MAX) throw new IOException("Color out of bounds");
 
                 result.add(new Press(color, drawTime));
@@ -65,6 +66,7 @@ public class Parser {
             throw new IOException("Unexpected file format");
         }
 
+        openedFile.close();
 
 
         return new PressChart(result);
@@ -91,8 +93,8 @@ public class Parser {
             throw new IOException("Access to file denied.");
         }
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
-            return reader;
+        try{
+            return new BufferedReader(new FileReader(fileName));
         }
         catch (IOException e){
             throw new IOException("Error opening file.");
