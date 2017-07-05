@@ -38,15 +38,15 @@ public class PressChart {
 	 */
 	public Chord next(double currentTime) {
 
-
-		if(this.lastCalledItem != 0 && currentTime<presses[this.lastCalledItem].getDrawTime())
-			throw new InvalidParameterException();
-
 		int i = this.lastCalledItem;
 		boolean[] arr = new boolean[5];
 
 		for (int y = 0; y< arr.length; y++)
 			arr[y] = false;
+
+		if(presses.length<=this.lastCalledItem){
+			return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
+		}
 
 		while(i < presses.length && presses[i].getDrawTime() < currentTime) {
 			arr[presses[i].getColor()] = true;
