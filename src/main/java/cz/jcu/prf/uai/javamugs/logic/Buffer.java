@@ -49,15 +49,23 @@ public class Buffer {
     }
 
     /**
-     * Checks if time exists in list and dequeue Chords from queue if so. Cannot be null.
+     * Checks if time exists in list and dequeue Chords from queue if so.
      *
      * @param pressedKeys Chord of pressed keys from
      * @param pressTime   Time of the press
-     * @return Pair of hits and misses
+     * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
+        // delete by time
+        for (int i = 0; i < pressTimes.size(); i++) {
+            if(pressTimes.get(i) < minTime) {
+                pressTimes.remove(i);
+                i--;
+                chordQueue.poll();
+            }
+        }
         double chordTime = -1;
         for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time and remove from list
             double time = pressTimes.get(i);
