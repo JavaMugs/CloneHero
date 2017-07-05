@@ -34,7 +34,12 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </BorderPane>
-      <Button fx:id="playButton" mnemonicParsing="false" prefWidth="200.0" text="Play">
+      <Button fx:id="playButton" mnemonicParsing="false" onAction="#playButtonAction" prefWidth="200.0" text="Play">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#editorButtonAction" prefWidth="200.0" text="Editor">
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>

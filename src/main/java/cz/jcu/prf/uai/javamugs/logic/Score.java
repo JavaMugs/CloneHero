@@ -1,7 +1,7 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
 /**
- * Game score container
+ * Game score container.
  * @author Daniel Hryzbil
  */
 public class Score {
