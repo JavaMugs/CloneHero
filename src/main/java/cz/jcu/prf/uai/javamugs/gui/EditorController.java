@@ -39,6 +39,12 @@ public class EditorController {
     public Button startBtn;
     public TextArea textPresses;
 
+    /**
+     * Round double to x decimals
+     * @param value
+     * @param places
+     * @return
+     */
     private double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -48,6 +54,10 @@ public class EditorController {
         return (double) tmp / factor;
     }
 
+    /**
+     * Throw actual press to textarea
+     * @param press
+     */
     private void setNewPressToTextarea(Press press){
         String colorName = "";
 
@@ -72,6 +82,9 @@ public class EditorController {
         textPresses.setText(colorName + "\t= " + Double.toString(round(press.getDrawTime(), 4)) + "\n" + textPresses.getText());
     }
 
+    /**
+     * Start listen keys to press
+     */
     private void startListenButtons(){
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
@@ -126,10 +139,17 @@ public class EditorController {
         });
     }
 
+    /**
+     * Start view
+     */
     public void start() {
         textPresses.setDisable(true);
     }
 
+    /**
+     * Start button
+     * @param event
+     */
     public void startBtnAction(ActionEvent event){
         countLabel.setText("Recording");
         startBtn.setVisible(false);
@@ -140,6 +160,10 @@ public class EditorController {
         startListenButtons();
     }
 
+    /**
+     * Set song path
+     * @param path
+     */
     public void setSongPath(String path){
         this.songPath = path;
     }
