@@ -72,15 +72,6 @@ public class Buffer {
                 break;
             }
         }
-        // delete by time
-        for (int i = 0; i < pressTimes.size(); i++) {
-            if(pressTimes.get(i) < chordTime - tolerance) {
-                pressTimes.remove(i);
-                i--;
-                chordQueue.poll();
-                misses++;
-            }
-        }
         Chord expectedChord;
         if (chordTime > 0) { // get expected chord
             expectedChord = chordQueue.peek();
@@ -99,6 +90,16 @@ public class Buffer {
         if(hits > 0) {
             chordQueue.poll();
             pressTimes.remove(chordTimeIndex);
+        } else {
+            // delete by time
+            for (int i = 0; i < pressTimes.size(); i++) {
+                if(pressTimes.get(i) < chordTime - tolerance) {
+                    pressTimes.remove(i);
+                    i--;
+                    chordQueue.poll();
+                    misses++;
+                }
+            }
         }
         return new BufferReport(hits, misses, expectedChord);
     }
