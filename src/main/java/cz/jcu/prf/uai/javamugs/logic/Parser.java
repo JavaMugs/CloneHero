@@ -63,7 +63,7 @@ public class Parser {
             }
         }
         catch(Exception e){
-            throw new IOException("Unexpected file format");
+            throw new IOException("Unexpected file format " + e.getMessage());
         }
 
         openedFile.close();

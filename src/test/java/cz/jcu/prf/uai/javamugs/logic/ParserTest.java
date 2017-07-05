@@ -2,30 +2,40 @@ package cz.jcu.prf.uai.javamugs.logic;
 
 import junit.framework.TestCase;
 
+import java.io.IOException;
+
 public class ParserTest extends TestCase {
 
+    private static final String TEST_CHARTS_PATH = "./tracks/testCharts/";
+
     public void testParseFile() throws Exception {
-        String path = "chart.prc";
+        String correctFilePath = "chart01.prc";
+        String missinExtPath = TEST_CHARTS_PATH + "MissingExtension";
+        String tooLargePath = TEST_CHARTS_PATH + "TooLarge.prc";
         double timeOffset = 3000;
-
         PressChart chart;
-
         Parser parser = new Parser();
 
-        try{
-            chart = parser.parseFile(path, timeOffset);
+        chart = parser.parseFile(correctFilePath, timeOffset);
+        assertNotNull(chart);
 
-            Chord nextChord = chart.next(50000);
-            while(!nextChord.isEmpty()){
-                for (int i = 0; i < nextChord.getChords().length; i++) {
-                    System.out.println(nextChord.getChords()[i]);
-                }
-                nextChord = chart.next(50000);
-            }
+        try{
+            parser.parseFile(missinExtPath, timeOffset);
+            fail();
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
+        catch(IOException e){
+            if(!e.getMessage().equals("Unexpected extension")) fail();
         }
+
+        try{
+            parser.parseFile(tooLargePath, timeOffset);
+            fail();
+        }
+        catch(IOException e){
+            if(!e.getMessage().equals("File is too large")) fail();
+        }
+
+        //TODO test unauthorized access attempt
 
 
 
