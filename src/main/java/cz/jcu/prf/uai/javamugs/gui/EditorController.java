@@ -39,6 +39,12 @@ public class EditorController {
     public Button startBtn;
     public TextArea textPresses;
 
+    /**
+     * Round double to x decimals
+     * @param value
+     * @param places
+     * @return
+     */
     private double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
@@ -48,6 +54,10 @@ public class EditorController {
         return (double) tmp / factor;
     }
 
+    /**
+     * Throw actual press to textarea
+     * @param press
+     */
     private void setNewPressToTextarea(Press press){
         String colorName = "";
 
@@ -72,53 +82,40 @@ public class EditorController {
         textPresses.setText(colorName + "\t= " + Double.toString(round(press.getDrawTime(), 4)) + "\n" + textPresses.getText());
     }
 
+    private void setFadeIn(Circle c){
+        FadeTransition ft = new FadeTransition(Duration.millis(300), c);
+        ft.setFromValue(0.3);
+        ft.setToValue(1);
+        ft.setCycleCount(1);
+        ft.setAutoReverse(true);
+        ft.play();
+    }
+
+    /**
+     * Start listen keys to press
+     */
     private void startListenButtons(){
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
                     case A:
-                        FadeTransition ft0 = new FadeTransition(Duration.millis(300), circle0);
-                        ft0.setFromValue(0.3);
-                        ft0.setToValue(1);
-                        ft0.setCycleCount(1);
-                        ft0.setAutoReverse(true);
-                        ft0.play();
+                        setFadeIn(circle0);
                         setNewPressToTextarea(new Press(Chord.RED, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case S:
-                        FadeTransition ft1 = new FadeTransition(Duration.millis(300), circle1);
-                        ft1.setFromValue(0.3);
-                        ft1.setToValue(1);
-                        ft1.setCycleCount(1);
-                        ft1.setAutoReverse(true);
-                        ft1.play();
+                        setFadeIn(circle1);
                         setNewPressToTextarea(new Press(Chord.YELLOW, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case D:
-                        FadeTransition ft2 = new FadeTransition(Duration.millis(300), circle2);
-                        ft2.setFromValue(0.3);
-                        ft2.setToValue(1);
-                        ft2.setCycleCount(1);
-                        ft2.setAutoReverse(true);
-                        ft2.play();
+                        setFadeIn(circle2);
                         setNewPressToTextarea(new Press(Chord.GREEN, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case K:
-                        FadeTransition ft3 = new FadeTransition(Duration.millis(300), circle3);
-                        ft3.setFromValue(0.3);
-                        ft3.setToValue(1);
-                        ft3.setCycleCount(1);
-                        ft3.setAutoReverse(true);
-                        ft3.play();
+                        setFadeIn(circle3);
                         setNewPressToTextarea(new Press(Chord.BLUE, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case L:
-                        FadeTransition ft4 = new FadeTransition(Duration.millis(300), circle4);
-                        ft4.setFromValue(0.3);
-                        ft4.setToValue(1);
-                        ft4.setCycleCount(1);
-                        ft4.setAutoReverse(true);
-                        ft4.play();
+                        setFadeIn(circle4);
                         setNewPressToTextarea(new Press(Chord.MAGENTA, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                 }
@@ -126,10 +123,17 @@ public class EditorController {
         });
     }
 
+    /**
+     * Start view
+     */
     public void start() {
         textPresses.setDisable(true);
     }
 
+    /**
+     * Start button
+     * @param event
+     */
     public void startBtnAction(ActionEvent event){
         countLabel.setText("Recording");
         startBtn.setVisible(false);
@@ -140,6 +144,10 @@ public class EditorController {
         startListenButtons();
     }
 
+    /**
+     * Set song path
+     * @param path
+     */
     public void setSongPath(String path){
         this.songPath = path;
     }
