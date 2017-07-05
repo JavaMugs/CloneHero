@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameController {
@@ -26,9 +28,11 @@ public class GameController {
     private MediaPlayer mediaPlayer;
     private Chord pressedButtons;
     private String songURIstring;
+    private ArrayList<BallAnimation> ballAnimations;
 
     public Canvas canvas;
     public BorderPane rootContainer;
+    public Label scoreLabel;
 
     public void setGame(Game game) {
         this.game = game;
@@ -40,39 +44,12 @@ public class GameController {
 
     public void start() {
         this.stage = (Stage) rootContainer.getScene().getWindow();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        //Strings
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(5);
-        gc.strokeLine(250, 0, 250, canvas.getHeight());
-        gc.strokeLine(325, 0, 325, canvas.getHeight());
-        gc.strokeLine(400, 0, 400, canvas.getHeight());
-        gc.strokeLine(475, 0, 475, canvas.getHeight());
-        gc.strokeLine(550, 0, 550, canvas.getHeight());
-        //Circles
-        gc.setFill(CloneHeroColors.RED);
-        gc.setLineWidth(3);
-        gc.fillOval(225, canvas.getHeight() - 75, 50, 50);
-        gc.strokeOval(225, canvas.getHeight() - 75, 50, 50);
-        gc.setFill(CloneHeroColors.YELLOW);
-        gc.fillOval(300, canvas.getHeight() - 75, 50, 50);
-        gc.strokeOval(300, canvas.getHeight() - 75, 50, 50);
-        gc.setFill(CloneHeroColors.GREEN);
-        gc.fillOval(375, canvas.getHeight() - 75, 50, 50);
-        gc.strokeOval(375, canvas.getHeight() - 75, 50, 50);
-        gc.setFill(CloneHeroColors.BLUE);
-        gc.fillOval(450, canvas.getHeight() - 75, 50, 50);
-        gc.strokeOval(450, canvas.getHeight() - 75, 50, 50);
-        gc.setFill(CloneHeroColors.MAGENTA);
-        gc.fillOval(525, canvas.getHeight() - 75, 50, 50);
-        gc.strokeOval(525, canvas.getHeight() - 75, 50, 50);
+        renderCanvas(canvas);
         //Key presses
         rootContainer.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                switch(event.getCode()) {
+                switch (event.getCode()) {
                     case A:
                         pressedButtons.getChords()[0] = true;
                         break;
@@ -100,18 +77,29 @@ public class GameController {
         //final long startNanoTime = System.nanoTime();
         pressedButtons = new Chord(false, false, false, false, false);
 
+        ballAnimations = new ArrayList<BallAnimation>();
+
         new AnimationTimer() // 60 FPS
         {
-            public void handle(long currentNanoTime)
-            {
+            public void handle(long currentNanoTime) {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                if(!report.getExpectedChord().isEmpty()) {
+                if (!report.getChordToDraw().isEmpty()) {
+                    boolean[] chordArr = report.getChordToDraw().getChords();
+                    for (int i = 0; i < chordArr.length; i++) {
+                        if (chordArr[i]) {
+                            ballAnimations.add(new BallAnimation(i, game.getTimeOffset(), mediaPlayer.getCurrentTime().toMillis()));
+                        }
+                    }
                 }
-                if(!pressedButtons.isEmpty()) {
-                    System.out.println("Pressed chord " + Arrays.toString(pressedButtons.getChords()));
-                    System.out.println("Expected chord " + Arrays.toString(report.getExpectedChord().getChords()));
-                    System.out.println("song time " + mediaPlayer.getCurrentTime());
-                    System.out.println("score " + report.getScore());
+                renderCanvas(canvas);
+                scoreLabel.setText(String.valueOf(report.getScore()) + "\n" + String.valueOf(report.getMultiplier() + "x"));
+                for (int i = 0; i < ballAnimations.size(); i++) {
+                    if (ballAnimations.get(i).isFinished()) {
+                        ballAnimations.remove(i);
+                        i--;
+                    } else {
+                        ballAnimations.get(i).animate(mediaPlayer.getCurrentTime().toMillis(), canvas);
+                    }
                 }
 
                 //fix
@@ -120,6 +108,68 @@ public class GameController {
         }.start();
 
 
+    }
+
+    private void renderCanvas(Canvas canvas) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //Strings
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(5);
+        gc.strokeLine(250, 0, 250, canvas.getHeight());
+        gc.strokeLine(325, 0, 325, canvas.getHeight());
+        gc.strokeLine(400, 0, 400, canvas.getHeight());
+        gc.strokeLine(475, 0, 475, canvas.getHeight());
+        gc.strokeLine(550, 0, 550, canvas.getHeight());
+        //Circles
+        gc.setFill(CloneHeroColors.RED);
+        gc.setLineWidth(3);
+        gc.fillOval(225, canvas.getHeight() - 75, 50, 50);
+        gc.strokeOval(225, canvas.getHeight() - 75, 50, 50);
+        gc.setFill(CloneHeroColors.YELLOW);
+        gc.fillOval(300, canvas.getHeight() - 75, 50, 50);
+        gc.strokeOval(300, canvas.getHeight() - 75, 50, 50);
+        gc.setFill(CloneHeroColors.GREEN);
+        gc.fillOval(375, canvas.getHeight() - 75, 50, 50);
+        gc.strokeOval(375, canvas.getHeight() - 75, 50, 50);
+        gc.setFill(CloneHeroColors.BLUE);
+        gc.fillOval(450, canvas.getHeight() - 75, 50, 50);
+        gc.strokeOval(450, canvas.getHeight() - 75, 50, 50);
+        gc.setFill(CloneHeroColors.MAGENTA);
+        gc.fillOval(525, canvas.getHeight() - 75, 50, 50);
+        gc.strokeOval(525, canvas.getHeight() - 75, 50, 50);
+    }
+
+    private class BallAnimation {
+        private int color;
+        private double y;
+        private boolean finished;
+        private double startTime;
+        private double endTime;
+
+        public BallAnimation(int color, double timeOffset, double startTime) {
+            this.color = color;
+            this.y = 0;
+            finished = false;
+            this.startTime = startTime;
+            this.endTime = startTime + timeOffset;
+        }
+
+        public void animate(double currentTime, Canvas canvas) {
+            double ratio = (currentTime - startTime) / (endTime - startTime);
+            this.y = (canvas.getHeight() - 75) * ratio;
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            gc.setFill(CloneHeroColors.COLORARRAY[color]);
+            gc.fillOval(225 + 75 * color, y, 50, 50);
+            if (currentTime >= endTime) {
+                finished = true;
+            }
+        }
+
+        public boolean isFinished() {
+            return finished;
+        }
     }
 }
 

@@ -11,6 +11,7 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
+            <Canvas fx:id="canvas" height="600.0" width="800.0" />
             <Label fx:id="scoreLabel" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
                   <Insets left="50.0" top="50.0" />
@@ -19,7 +20,6 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <Canvas fx:id="canvas" height="600.0" width="800.0" />
          </children>
       </StackPane>
    </center>

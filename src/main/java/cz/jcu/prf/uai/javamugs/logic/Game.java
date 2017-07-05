@@ -7,14 +7,12 @@ package cz.jcu.prf.uai.javamugs.logic;
 public class Game {
 
 	public static final int SCORE_BASE = 100;
-	public static final int HITS_IN_ROW_MULTIPLY = 5;  // fix GameTest after changing this
-	public static final double MULTIPLIER_BASE = 0.1;
+	public static final double MULTIPLIER_BASE = 0.5;
 
 	private double timeOffset;
 	private PressChart pressChart;
 	private Score score;
 	private Buffer buffer;
-	private int hitsInRow;
 
 	/**
 	 * Creates game logic.
@@ -40,20 +38,19 @@ public class Game {
 		buffer.addToBuffer(next, currentTime+timeOffset);
 		BufferReport report = buffer.check(chord, currentTime);
 
-		hitsInRow += report.getHit();
 		if (report.getMiss() > 0) {
-			hitsInRow = 0;
 			score.resetMultiplier();
-		}
-		else if (hitsInRow >= HITS_IN_ROW_MULTIPLY) {
-			hitsInRow = 0;
-			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
 		if (report.getHit() > 0) {
 			score.addScore(SCORE_BASE * report.getHit());
+			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
 		return new GameReport(score, next, report.getExpectedChord());
+	}
+	
+	public double getTimeOffset() {
+		return timeOffset;
 	}
 }

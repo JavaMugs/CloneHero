@@ -97,14 +97,14 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
             EditorController editorController = (EditorController) loader.getController();
-            Stage editorStage = new Stage();
-            editorStage.setTitle("Clone Hero Editor");
-            editorStage.setScene(new Scene(root));
-            editorStage.show();
             File songFile = fileChooser.showOpenDialog(stage);
             if (songFile == null) {
                 return;
             }
+            Stage editorStage = new Stage();
+            editorStage.setTitle("Clone Hero Editor");
+            editorStage.setScene(new Scene(root));
+            editorStage.show();
             editorController.setSongPath(songFile.toURI().toString());
 
             editorController.start();

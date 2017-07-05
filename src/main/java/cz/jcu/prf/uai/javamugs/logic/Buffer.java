@@ -2,10 +2,7 @@ package cz.jcu.prf.uai.javamugs.logic;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by ivank on 04.07.2017.
@@ -79,8 +76,7 @@ public class Buffer {
             expectedChord = new Chord(false, false, false, false, false);
         }
         for (int i = 0; i < 5; i++) {
-            if (pressedKeys.getChords()[i] && !expectedChord.getChords()[i] // key pressed, nothing expected
-                    || !pressedKeys.getChords()[i] && expectedChord.getChords()[i]) { // nothing pressed, key press expected
+            if (pressedKeys.getChords()[i] && !expectedChord.getChords()[i]) { // key pressed, nothing expected
                 misses++;
             }
             if (pressedKeys.getChords()[i] && expectedChord.getChords()[i]) {
@@ -96,8 +92,9 @@ public class Buffer {
                 if(pressTimes.get(i) < chordTime - tolerance) {
                     pressTimes.remove(i);
                     i--;
-                    chordQueue.poll();
                     misses++;
+                    chordQueue.poll();
+                    System.out.println(Arrays.toString(expectedChord.getChords()));
                 }
             }
         }
