@@ -98,7 +98,6 @@ public class MenuController {
             Stage editorStage = new Stage();
             editorStage.setTitle("Clone Hero Editor");
             editorStage.setScene(new Scene(root));
-            editorController.setStage(editorStage);
             editorStage.show();
             editorController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
