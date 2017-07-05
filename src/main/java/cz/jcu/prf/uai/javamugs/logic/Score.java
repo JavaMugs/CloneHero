@@ -25,10 +25,24 @@ public class Score {
 	}
 
 	/**
+	 * Sets score to 0.
+	 */
+	public void resetScore() {
+		score = 0;
+	}
+	
+	/**
 	 * @param score added score. It's multiplied by current multiplier.
 	 */
 	public void addScore(long number) {
 		score += number*multiplier;
+	}
+	
+	/**
+	 * @return current multiplier
+	 */
+	public double getMultiplier() {
+		return multiplier;
 	}
 	
 	/**
@@ -43,12 +57,5 @@ public class Score {
 	 */
 	public void addMultiplier(double number) {
 		multiplier += number;
-	}
-	
-	/**
-	 * @return current multiplier
-	 */
-	public double getMultiplier() {
-		return multiplier;
 	}
 }
