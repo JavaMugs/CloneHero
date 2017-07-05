@@ -39,7 +39,7 @@ public class Buffer {
      * @param pressTime time to when the chord should be pressed
      */
     public void addToBuffer(Chord chord, double pressTime) {
-        if(!chord.isEmpty()) {
+        if (!chord.isEmpty()) {
             bufferRecords.add(new BufferRecord(chord, pressTime));
         }
     }
@@ -52,48 +52,6 @@ public class Buffer {
      * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
-        /*double minTime = pressTime - tolerance;
-        double maxTime = pressTime + tolerance;
-        int hits = 0;
-        int misses = 0;
-        double chordTime = -1;
-        int chordTimeIndex = -1;
-        for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time
-            double time = pressTimes.get(i);
-            if (time > minTime && time < maxTime) {
-                chordTime = time;
-                chordTimeIndex = i;
-                break;
-            }
-        }
-        Chord expectedChord;
-        if (chordTime > 0) { // get expected chord
-            expectedChord = chordQueue.peek();
-        } else {
-            expectedChord = new Chord(false, false, false, false, false);
-        }
-        for (int i = 0; i < 5; i++) {
-            if (pressedKeys.getChords()[i] && !expectedChord.getChords()[i]) { // key pressed, nothing expected
-                misses++;
-            }
-            if (pressedKeys.getChords()[i] && expectedChord.getChords()[i]) {
-                hits++;
-            }
-        }
-        if(hits > 0) {
-            chordQueue.poll();
-            pressTimes.remove(chordTimeIndex);
-        } else {
-            // delete by time
-            for (int i = 0; i < pressTimes.size(); i++) {
-                if(pressTimes.get(i) < chordTime - tolerance) {
-                    pressTimes.remove(i);
-                    i--;
-                    misses++;
-                    chordQueue.poll();
-                }
-            }
-        }*/
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
         ArrayList<BufferRecord> expectedBufferRecords = new ArrayList<BufferRecord>();
@@ -103,20 +61,35 @@ public class Buffer {
                 expectedBufferRecords.add(bufferRecord);
             }
         }
-        int misses = 0;
         Chord hitChord = new Chord(false, false, false, false, false);
         Chord missChord = new Chord(false, false, false, false, false);
+        if (expectedBufferRecords.isEmpty()) {
+            for (int i = 0; i < missChord.getChords().length; i++)
+                missChord.getChords()[i] = pressedKeys.getChords()[i];
+        }
         for (BufferRecord expectedBufferRecord : expectedBufferRecords) {
-            expectedBufferRecord.checkHits(pressedKeys);
-            misses = expectedBufferRecord.checkUnexpectedPresses(pressedKeys);
-            for (int i = 0; i < hitChord.getChords().length; i++) {
-                if(expectedBufferRecord.getChord().getChords()[i]) hitChord.getChords()[i] = true;
+            expectedBufferRecord.checkUnexpectedPresses(pressedKeys, missChord);
+            expectedBufferRecord.checkHits(pressedKeys, hitChord);
+            if (!pressedKeys.isEmpty()) {
+                int i = 1 + 1;
+            }
+        }
+        // check empty expected chords and chord out of time
+        for (int i = 0; i < bufferRecords.size(); i++) {
+            boolean remove = false;
+            if (bufferRecords.get(i).getChord().isEmpty()) {
+                remove = true;
+            } else if (bufferRecords.get(i).getTime() + tolerance < pressTime) {
+                remove = true;
+                bufferRecords.get(i).checkMisses(missChord);
+            }
+            if (remove) {
+                bufferRecords.remove(i);
+                i--;
             }
         }
 
-
-        //return new BufferReport(hits, misses, expectedChord);
-        return null
+        return new BufferReport(hitChord, missChord);
     }
 
     /**
@@ -146,24 +119,32 @@ public class Buffer {
 
         public int getMisses() {
             int expectedHits = 0;
-            for(boolean string : chord.getChords()) {
-                if(string) expectedHits++;
+            for (boolean string : chord.getChords()) {
+                if (string) expectedHits++;
             }
             return expectedHits - hits;
         }
 
-        public void checkHits(Chord pressedChord) {
-            for(int i = 0; i < chord.getChords().length; i++) {
-                if(chord.getChords()[i] && pressedChord.getChords()[i]) hits++;
+        public void checkHits(Chord pressedChord, Chord hitChordToUpdate) {
+            for (int i = 0; i < chord.getChords().length; i++) {
+                if (chord.getChords()[i] && pressedChord.getChords()[i]) {
+                    hits++;
+                    hitChordToUpdate.getChords()[i] = true;
+                    chord.getChords()[i] = false;
+                }
             }
         }
 
-        public int  checkUnexpectedPresses(Chord pressedChord) {
-            int misses = 0;
-            for(int i = 0; i < chord.getChords().length; i++) {
-                if(!chord.getChords()[i] && pressedChord.getChords()[i]) misses++;
+        public void checkUnexpectedPresses(Chord pressedChord, Chord missChordToUpdate) {
+            for (int i = 0; i < chord.getChords().length; i++) {
+                if (!chord.getChords()[i] && pressedChord.getChords()[i]) missChordToUpdate.getChords()[i] = true;
             }
-            return misses;
+        }
+
+        public void checkMisses(Chord missChordToUpdate) {
+            for (int i = 0; i < chord.getChords().length; i++) {
+                if (chord.getChords()[i]) missChordToUpdate.getChords()[i] = true;
+            }
         }
 
         public double getTime() {

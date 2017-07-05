@@ -19,7 +19,7 @@ public class BufferReport {
      * @param hit  number of hits
      * @param miss number of misses
      */
-    public BufferReport(int hit, int miss, Chord hitChord, Chord missChord) {
+    public BufferReport(Chord hitChord, Chord missChord) {
         this.hit = 0;
         for (int i = 0; i < hitChord.getChords().length; i++) {
             if(hitChord.getChords()[i]) this.hit++;
