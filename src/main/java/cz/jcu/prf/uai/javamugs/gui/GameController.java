@@ -83,12 +83,6 @@ public class GameController {
         {
             public void handle(long currentNanoTime) {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                if (!pressedButtons.isEmpty()) {
-                    System.out.println("Pressed chord " + Arrays.toString(pressedButtons.getChords()));
-                    System.out.println("Expected chord " + Arrays.toString(report.getExpectedChord().getChords()));
-                    System.out.println("song time " + mediaPlayer.getCurrentTime());
-                    System.out.println("score " + report.getScore());
-                }
                 if (!report.getChordToDraw().isEmpty()) {
                     boolean[] chordArr = report.getChordToDraw().getChords();
                     for (int i = 0; i < chordArr.length; i++) {
