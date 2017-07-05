@@ -3,7 +3,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.GameController">
+<BorderPane fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.GameController">
    <center>
       <Canvas fx:id="canvas" height="600.0" width="800.0" BorderPane.alignment="CENTER" />
    </center>

@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -27,12 +28,10 @@ public class MenuController {
     public Slider difficultySlider;
     public Button exitButton;
     public FileChooser fileChooser = new FileChooser();
+    public VBox rootContainer;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void initialize() {
+    public void start() {
+        this.stage = (Stage) rootContainer.getScene().getWindow();
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
         );
@@ -82,8 +81,8 @@ public class MenuController {
             Stage gameStage = new Stage();
             gameStage.setTitle("Clone Hero");
             gameStage.setScene(new Scene(root));
-            gameController.setStage(gameStage);
             gameStage.show();
+            gameController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
@@ -101,6 +100,7 @@ public class MenuController {
             editorStage.setScene(new Scene(root));
             editorController.setStage(editorStage);
             editorStage.show();
+            editorController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
