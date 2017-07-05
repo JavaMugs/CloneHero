@@ -7,7 +7,7 @@ package cz.jcu.prf.uai.javamugs.logic;
 public class Game {
 
 	public static final int SCORE_BASE = 100;
-	public static final double MULTIPLIER_BASE = 0.1;
+	public static final double MULTIPLIER_BASE = 0.5;
 
 	private double timeOffset;
 	private PressChart pressChart;

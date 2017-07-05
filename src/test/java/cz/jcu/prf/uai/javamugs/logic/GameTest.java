@@ -39,32 +39,47 @@ public class GameTest extends TestCase {
 		GameReport report;
 		double currentTime = 0;
 		long expectedScore = 0;
+		double expectedMultiplier = 1.0;
 		
 		report = game.tick(currentTime, emptyInput);
 		assertEquals(expectedScore, report.getScore());
-		assertEquals(1.0, report.getMultiplier());
+		assertEquals(expectedMultiplier, report.getMultiplier());
 		currentTime += 50;
 		
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 7; i++) {
 			report = game.tick(currentTime, userInput);
 			assertEquals(expectedScore, report.getScore());
-			assertEquals(1.0, report.getMultiplier());
+			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 50;
 		}
 		
-		for (int i = 0; i < 4; i++) {
-			expectedScore += Game.SCORE_BASE;
+		report = game.tick(currentTime, emptyInput);
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 50;
+		
+		expectedScore += Game.SCORE_BASE;
+		expectedMultiplier += Game.MULTIPLIER_BASE;
+		report = game.tick(currentTime, userInput);
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		for (int i = 0; i < 3; i++) {
+			expectedScore += Game.SCORE_BASE * expectedMultiplier;
+			expectedMultiplier += Game.MULTIPLIER_BASE;
 			report = game.tick(currentTime, userInput);
 			assertEquals(expectedScore, report.getScore());
-			assertEquals(1.0, report.getMultiplier());
+			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 100;
 		}
 		
 		for (int i = 0; i < 3; i++) {
-			expectedScore += Game.SCORE_BASE * (1.0+Game.MULTIPLIER_BASE);
+			expectedScore += Game.SCORE_BASE * expectedMultiplier;
+			expectedMultiplier += Game.MULTIPLIER_BASE;
 			report = game.tick(currentTime, userInput);
 			assertEquals(expectedScore, report.getScore());
-			assertEquals(1.0 + Game.MULTIPLIER_BASE, report.getMultiplier());
+			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 100;
 		}
 		
@@ -81,7 +96,7 @@ public class GameTest extends TestCase {
 		
 		report = game.tick(currentTime, userInput);
 		assertEquals(expectedScore, report.getScore());
-		assertEquals(1.0, report.getMultiplier());
+		assertEquals(1.0+Game.MULTIPLIER_BASE, report.getMultiplier());
 		currentTime += 100;
 		
 		report = game.tick(currentTime, userInput);
