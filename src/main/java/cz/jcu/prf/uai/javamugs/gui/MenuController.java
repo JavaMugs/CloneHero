@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MenuController {
@@ -41,10 +42,8 @@ public class MenuController {
     }
 
     public void playButtonAction(ActionEvent event) {
-        openGameWindow(null); //TODO put method under logic
-        return;
 
-        /*File songFile = fileChooser.showOpenDialog(stage);
+        File songFile = fileChooser.showOpenDialog(stage);
         if (songFile == null) {
             return;
         }
@@ -69,7 +68,9 @@ public class MenuController {
 
         int difficulty = (int)difficultySlider.getValue();
 
-        Game game = new Game(timeOffset, (byte)difficulty, pressChart);*/
+        Game game = new Game(timeOffset, (byte)difficulty, pressChart);
+
+        openGameWindow(game); //TODO put method under logic
     }
 
     private void openGameWindow(Game game) {
