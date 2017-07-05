@@ -1,5 +1,6 @@
 package cz.jcu.prf.uai.javamugs.gui;
 
+import cz.jcu.prf.uai.javamugs.logic.Chord;
 import cz.jcu.prf.uai.javamugs.logic.Press;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
@@ -36,13 +37,42 @@ public class EditorController {
     public Circle circle3;
     public Circle circle4;
     public Button startBtn;
-    public TableView<Press> tablePresses;
-    public TableColumn<Press, Integer> buttonCol;
-    public TableColumn<Press, Long> timeCol;
+    public TextArea textPresses;
 
+    private double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
-    public void start() {
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
+    private void setNewPressToTextarea(Press press){
+        String colorName = "";
+
+        switch (press.getColor()){
+            case 0:
+                colorName = "Red\t";
+                break;
+            case 1:
+                colorName = "Yellow";
+                break;
+            case 2:
+                colorName = "Green";
+                break;
+            case 3:
+                colorName = "Blue\t";
+                break;
+            case 4:
+                colorName = "Magenta";
+                break;
+        }
+
+        textPresses.setText(colorName + "\t= " + Double.toString(round(press.getDrawTime(), 4)) + "\n" + textPresses.getText());
+    }
+
+    private void startListenButtons(){
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
@@ -53,6 +83,7 @@ public class EditorController {
                         ft0.setCycleCount(1);
                         ft0.setAutoReverse(true);
                         ft0.play();
+                        setNewPressToTextarea(new Press(Chord.RED, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case S:
                         FadeTransition ft1 = new FadeTransition(Duration.millis(300), circle1);
@@ -61,6 +92,7 @@ public class EditorController {
                         ft1.setCycleCount(1);
                         ft1.setAutoReverse(true);
                         ft1.play();
+                        setNewPressToTextarea(new Press(Chord.YELLOW, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case D:
                         FadeTransition ft2 = new FadeTransition(Duration.millis(300), circle2);
@@ -69,6 +101,7 @@ public class EditorController {
                         ft2.setCycleCount(1);
                         ft2.setAutoReverse(true);
                         ft2.play();
+                        setNewPressToTextarea(new Press(Chord.GREEN, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case K:
                         FadeTransition ft3 = new FadeTransition(Duration.millis(300), circle3);
@@ -77,6 +110,7 @@ public class EditorController {
                         ft3.setCycleCount(1);
                         ft3.setAutoReverse(true);
                         ft3.play();
+                        setNewPressToTextarea(new Press(Chord.BLUE, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                     case L:
                         FadeTransition ft4 = new FadeTransition(Duration.millis(300), circle4);
@@ -85,10 +119,15 @@ public class EditorController {
                         ft4.setCycleCount(1);
                         ft4.setAutoReverse(true);
                         ft4.play();
+                        setNewPressToTextarea(new Press(Chord.MAGENTA, mediaPlayer.getCurrentTime().toMillis()));
                         break;
                 }
             }
         });
+    }
+
+    public void start() {
+        textPresses.setDisable(true);
     }
 
     public void startBtnAction(ActionEvent event){
@@ -98,18 +137,10 @@ public class EditorController {
         Media sound = new Media(this.songPath);
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
-
-        ObservableList<Press> data =
-                FXCollections.observableArrayList(
-                        new Press(1, 50),
-                        new Press(3, 80)
-                );
-
-        tablePresses.setItems(data);
+        startListenButtons();
     }
 
     public void setSongPath(String path){
         this.songPath = path;
     }
 }
-

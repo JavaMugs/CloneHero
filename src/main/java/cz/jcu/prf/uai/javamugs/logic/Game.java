@@ -31,33 +31,27 @@ public class Game {
 	
 	/**
 	 * Updates and reports current game status.
-	 * @param curretTime actual game time.
+	 * @param currentTime actual game time.
 	 * @param chord chord pressed keys by user.
 	 * @return game status. Never null.
 	 */
 	public GameReport tick(double currentTime, Chord chord) {
 		Chord next = pressChart.next(currentTime);
-		if (next != null)
-		{
-			buffer.addToBuffer(next, currentTime+timeOffset);
-		}
+		buffer.addToBuffer(next, currentTime+timeOffset);
 		BufferReport report = buffer.check(chord, currentTime);
 
 		hitsInRow += report.getHit();
-		if (report.getMiss() > 0)
-		{
+		if (report.getMiss() > 0) {
 			hitsInRow = 0;
 			score.resetMultiplier();
 		}
-		else if (hitsInRow >= HITS_IN_ROW_MULTIPLY)
-		{
+		else if (hitsInRow >= HITS_IN_ROW_MULTIPLY) {
 			hitsInRow = 0;
 			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
-		if (report.getHit() > 0)
-		{
-			score.addScore(SCORE_BASE);
+		if (report.getHit() > 0) {
+			score.addScore(SCORE_BASE * report.getHit());
 		}
 
 		return new GameReport(score, next, report.getExpectedChord());

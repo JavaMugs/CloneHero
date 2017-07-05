@@ -44,8 +44,10 @@ public class Buffer {
      * @param pressTime time to when the chord should be pressed
      */
     public void addToBuffer(Chord chord, double pressTime) {
-        chordQueue.add(chord);
-        pressTimes.add(pressTime);
+        if(!chord.isEmpty()) {
+            chordQueue.add(chord);
+            pressTimes.add(pressTime);
+        }
     }
 
     /**
@@ -58,31 +60,33 @@ public class Buffer {
     public BufferReport check(Chord pressedKeys, double pressTime) {
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
-        // delete by time
-        for (int i = 0; i < pressTimes.size(); i++) {
-            if(pressTimes.get(i) < minTime) {
-                pressTimes.remove(i);
-                i--;
-                chordQueue.poll();
-            }
-        }
+        int hits = 0;
+        int misses = 0;
         double chordTime = -1;
-        for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time and remove from list
+        int chordTimeIndex = -1;
+        for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time
             double time = pressTimes.get(i);
             if (time > minTime && time < maxTime) {
                 chordTime = time;
-                pressTimes.remove(i);
+                chordTimeIndex = i;
                 break;
+            }
+        }
+        // delete by time
+        for (int i = 0; i < pressTimes.size(); i++) {
+            if(pressTimes.get(i) < chordTime - tolerance) {
+                pressTimes.remove(i);
+                i--;
+                chordQueue.poll();
+                misses++;
             }
         }
         Chord expectedChord;
         if (chordTime > 0) { // get expected chord
-            expectedChord = chordQueue.poll();
+            expectedChord = chordQueue.peek();
         } else {
             expectedChord = new Chord(false, false, false, false, false);
         }
-        int hits = 0;
-        int misses = 0;
         for (int i = 0; i < 5; i++) {
             if (pressedKeys.getChords()[i] && !expectedChord.getChords()[i] // key pressed, nothing expected
                     || !pressedKeys.getChords()[i] && expectedChord.getChords()[i]) { // nothing pressed, key press expected
@@ -91,6 +95,10 @@ public class Buffer {
             if (pressedKeys.getChords()[i] && expectedChord.getChords()[i]) {
                 hits++;
             }
+        }
+        if(hits > 0) {
+            chordQueue.poll();
+            pressTimes.remove(chordTimeIndex);
         }
         return new BufferReport(hits, misses, expectedChord);
     }

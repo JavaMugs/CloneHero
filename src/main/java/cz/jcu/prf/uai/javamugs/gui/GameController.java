@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class GameController {
     private Stage stage;
@@ -87,8 +88,8 @@ public class GameController {
                     case L:
                         pressedButtons.getChords()[4] = true;
                         break;
-
                 }
+                System.out.println(Arrays.toString(pressedButtons.getChords()));
             }
         });
 
@@ -96,17 +97,24 @@ public class GameController {
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
 
-        final long startNanoTime = System.nanoTime();
+        //final long startNanoTime = System.nanoTime();
+        pressedButtons = new Chord(false, false, false, false, false);
 
         new AnimationTimer() // 60 FPS
         {
             public void handle(long currentNanoTime)
             {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                if(!report.getChordToDraw().isEmpty()) {
-                    System.out.println(report.getChordToDraw());
+                if(!report.getExpectedChord().isEmpty()) {
+                }
+                if(!pressedButtons.isEmpty()) {
+                    System.out.println("Pressed chord " + Arrays.toString(pressedButtons.getChords()));
+                    System.out.println("Expected chord " + Arrays.toString(report.getExpectedChord().getChords()));
+                    System.out.println("song time " + mediaPlayer.getCurrentTime());
+                    System.out.println("score " + report.getScore());
                 }
 
+                //fix
                 pressedButtons = new Chord(false, false, false, false, false);
             }
         }.start();
