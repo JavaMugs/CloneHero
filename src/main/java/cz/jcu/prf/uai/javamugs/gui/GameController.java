@@ -155,16 +155,16 @@ public class GameController {
             gc.setLineWidth(5);
             double x = 250 + i * 75;
             if (highlightedStrings[i] > 0) {
-                gc.setStroke(Color.web("#00FF00"));
+                gc.setStroke(Color.GREEN);
                 highlightedStrings[i]--;
                 int randomInt = random.nextInt(6);
                 randomInt -= randomInt / 2;
                 x += randomInt;
             } else if (highlightedStrings[i] < 0) {
-                gc.setStroke(Color.web("#FF0000"));
+                gc.setStroke(Color.RED);
                 highlightedStrings[i]++;
             } else
-                gc.setStroke(Color.WHITE);
+                gc.setStroke(Color.LIGHTGREY);
             gc.strokeLine(x, 0, x, canvas.getHeight());
             //Circles
             gc.setFill(CloneHeroColors.COLORARRAY[i]);

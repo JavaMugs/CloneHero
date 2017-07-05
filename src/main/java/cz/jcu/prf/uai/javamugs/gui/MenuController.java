@@ -91,6 +91,7 @@ public class MenuController {
             gameStage.setTitle("Clone Hero");
             gameStage.setScene(new Scene(root));
             gameStage.setResizable(false);
+            gameStage.getIcons().add(new Image(getClass().getResource("/icon.png").toString()));
             gameStage.show();
             gameController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
@@ -116,6 +117,7 @@ public class MenuController {
             editorStage.setTitle("Clone Hero Editor");
             editorStage.setScene(new Scene(root));
             editorStage.setResizable(false);
+            editorStage.getIcons().add(new Image(getClass().getResource("/icon.png").toString()));
             editorStage.show();
             editorController.setSongPath(songFile.toURI().toString());
 
