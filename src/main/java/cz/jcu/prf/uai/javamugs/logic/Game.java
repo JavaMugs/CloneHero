@@ -32,7 +32,7 @@ public class Game {
 	/**
 	 * Updates and reports current game status.
 	 * @param curretTime actual game time.
-	 * @param chord chord pressed keys by user or null.
+	 * @param chord chord pressed keys by user.
 	 * @return game status. Never null.
 	 */
 	public GameReport tick(double currentTime, Chord chord) {
@@ -41,11 +41,7 @@ public class Game {
 		{
 			buffer.addToBuffer(next, currentTime+timeOffset);
 		}
-		BufferReport report;
-		if (chord == null)
-			report = buffer.check(new Chord(false, false, false, false, false), currentTime);
-		else
-			report = buffer.check(chord, currentTime);
+		BufferReport report = buffer.check(chord, currentTime);
 
 		hitsInRow += report.getHit();
 		if (report.getMiss() > 0)
