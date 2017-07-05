@@ -70,7 +70,7 @@ public class MenuController {
 
         Game game = new Game(timeOffset, (byte)difficulty, pressChart);
 
-        openGameWindow(game, songURIstring); //TODO put method under logic
+        openGameWindow(null, songURIstring); //TODO put method under logic
     }
 
     private void openGameWindow(Game game, String songURIstring) {

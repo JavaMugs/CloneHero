@@ -103,7 +103,9 @@ public class GameController {
             public void handle(long currentNanoTime)
             {
                 GameReport report = game.tick(mediaPlayer.getCurrentTime().toMillis(), pressedButtons);
-                System.out.println(report.getScore());
+                if(!report.getChordToDraw().isEmpty()) {
+                    System.out.println(report.getChordToDraw());
+                }
 
                 pressedButtons = new Chord(false, false, false, false, false);
             }
