@@ -43,7 +43,23 @@ public class EditorController {
 
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
-                System.out.println(ke);
+                switch (ke.getCode()){
+                    case D:
+                        System.out.println("red");
+                        break;
+                    case F:
+                        System.out.println("yellow");
+                        break;
+                    case G:
+                        System.out.println("green");
+                        break;
+                    case H:
+                        System.out.println("blue");
+                        break;
+                    case J:
+                        System.out.println("mag");
+                        break;
+                }
             }
         });
     }
