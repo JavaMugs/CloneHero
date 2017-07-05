@@ -14,7 +14,6 @@ public class Buffer {
 
     private Queue<Chord> chordQueue;
     private List<Double> pressTimes;
-    private int difficulty;
     private int tolerance;
 
     /**
@@ -25,7 +24,6 @@ public class Buffer {
     public Buffer(byte difficulty) {
         chordQueue = new LinkedList<Chord>();
         pressTimes = new ArrayList<Double>();
-        this.difficulty = difficulty;
         switch (difficulty) {
             case 1:
                 this.tolerance = 150;
@@ -37,7 +35,6 @@ public class Buffer {
                 this.tolerance = 50;
                 break;
         }
-        throw new NotImplementedException();
     }
 
     /**
@@ -52,17 +49,18 @@ public class Buffer {
     }
 
     /**
-     * Checks if time exists in list and dequeue Chords from queue if so. Cannot be null.
+     * Checks if time exists in list and dequeue Chords from queue if so.
      *
      * @param pressedKeys Chord of pressed keys from
      * @param pressTime   Time of the press
-     * @return Pair of hits and misses
+     * @return Pair of hits and misses, never null
      */
     public BufferReport check(Chord pressedKeys, double pressTime) {
+        // TODO delete by time
         double minTime = pressTime - tolerance;
         double maxTime = pressTime + tolerance;
         double chordTime = -1;
-        for (int i = 0; i < pressTimes.size(); i++) {
+        for (int i = 0; i < pressTimes.size(); i++) { // get expected chord time and remove from list
             double time = pressTimes.get(i);
             if (time > minTime && time < maxTime) {
                 chordTime = time;
@@ -71,7 +69,7 @@ public class Buffer {
             }
         }
         Chord expectedChord;
-        if (chordTime > 0) {
+        if (chordTime > 0) { // get expected chord
             expectedChord = chordQueue.poll();
         } else {
             expectedChord = new Chord(false, false, false, false, false);
@@ -80,7 +78,7 @@ public class Buffer {
         int misses = 0;
         for (int i = 0; i < 5; i++) {
             if (pressedKeys.getChords()[i] && !expectedChord.getChords()[i] // key pressed, nothing expected
-                    || !pressedKeys.getChords()[i] && !expectedChord.getChords()[i]) { // nothing pressed, key press expected
+                    || !pressedKeys.getChords()[i] && expectedChord.getChords()[i]) { // nothing pressed, key press expected
                 misses++;
             }
             if (pressedKeys.getChords()[i] && expectedChord.getChords()[i]) {
