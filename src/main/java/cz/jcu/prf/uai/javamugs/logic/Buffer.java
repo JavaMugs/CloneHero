@@ -15,6 +15,7 @@ public class Buffer {
     private Queue<Chord> chordQueue;
     private List<Double> pressTimes;
     private int difficulty;
+    private int tolerance;
 
     /**
      * Creates Buffer with set difficulty
@@ -24,6 +25,17 @@ public class Buffer {
         chordQueue = new LinkedList<Chord>();
         pressTimes = new ArrayList<Double>();
         this.difficulty = difficulty;
+        switch(difficulty) {
+            case 1:
+                this.tolerance = 150;
+                break;
+            case 2:
+                this.tolerance = 100;
+                break;
+            case 3:
+                this.tolerance = 50;
+                break;
+        }
         throw new NotImplementedException();
     }
 
@@ -43,8 +55,9 @@ public class Buffer {
      * @param PressTime Time of the press
      * @return Pair of hits and misses
      */
-    public BufferReport check(Chord pressedKeys, long PressTime) {
-        //TODO
+    public BufferReport check(Chord pressedKeys, double pressTime) {
+        double minTime = pressTime - 150;
+        double maxTime = pressTime + 150;
         throw new NotImplementedException();
     }
 
