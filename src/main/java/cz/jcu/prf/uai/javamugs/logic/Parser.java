@@ -23,7 +23,7 @@ public class Parser {
     private static final String SEPARATOR = ":";
 
     /**
-     * Opens track file and parses into PressChart.
+     * Opens track file and parses it into PressChart.
      * Expected file format is [milliseconds from song beginning]:[number denoting its color]
      * no braces, one entry per line.
      * Presses that would be drawn before time 0 are discarded.
@@ -39,27 +39,26 @@ public class Parser {
 
         BufferedReader openedFile = attemptOpenFile(fileName);
 
-
-
-
-        List<List<String>> parsedFile = openedFile.lines()
-                                                    .map(line -> Arrays.asList(line.split(SEPARATOR)))
-                                                    .collect(Collectors.toList());
-
-
+        List<List<String>> parsedFile =   openedFile.lines()                                                            //turn reader into stream
+                                                    .map(line -> Arrays.asList(line.split(SEPARATOR)))                  //turn every line into a two field list
+                                                    .collect(Collectors.toList());                                      //collect the lists creating a 2D list
 
         try {
-            double hitTime, drawTime;
+            double hitTime = 0, prevHitTime, drawTime;
 
             for (List<String> line : parsedFile) {
 
+                prevHitTime = hitTime;
                 hitTime = Double.parseDouble(line.get(0));
-                drawTime = hitTime - timeOffset;
-                if(drawTime < 0.0) continue;
-                int color = Integer.parseInt(line.get(1));
-                if (color < COLOR_MIN || color > COLOR_MAX) throw new IOException("Color out of bounds");
 
-                result.add(new Press(color, drawTime));
+                if(hitTime < prevHitTime) throw new IOException("Entries in wrong order.");                             //check for time ordering
+
+                drawTime = hitTime - timeOffset;
+                if(drawTime < 0.0) continue;                                                                            //discard early presses
+                int color = Integer.parseInt(line.get(1));
+                if (color < COLOR_MIN || color > COLOR_MAX) throw new IOException("Color out of bounds");               //check for unknown color
+
+                result.add(new Press(color, drawTime));                                                                 //add parsed line to result
             }
         }
         catch(Exception e){
@@ -67,7 +66,6 @@ public class Parser {
         }
 
         openedFile.close();
-
 
         return new PressChart(result);
 	}
