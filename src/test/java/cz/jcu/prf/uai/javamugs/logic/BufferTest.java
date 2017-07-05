@@ -32,6 +32,15 @@ public class BufferTest extends TestCase {
         assertEquals(chord2, report.getExpectedChord());
 
         assertEquals(0, buffer.getChordCount());
+
+        Chord chord3 = new Chord(true, false, true, false, true);
+        buffer.addToBuffer(chord3, 5000);
+        Chord chord4 = new Chord(true, false, true, false, true);
+        buffer.addToBuffer(chord4, 8000);
+        buffer.check(new Chord(false, false, false, false, false), 10000);
+        assertEquals(0, buffer.getChordCount());
+        assertEquals(0, buffer.getTimesCount());
+
     }
 
 }
