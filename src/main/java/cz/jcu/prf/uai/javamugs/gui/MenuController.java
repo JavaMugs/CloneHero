@@ -62,7 +62,7 @@ public class MenuController {
         try {
             pressChart = parser.parseFile(pressChartPath, timeOffset);
         } catch(Exception ex) {
-            // TODO change exceptions
+            ex.printStackTrace();
             return;
         }
 
@@ -70,15 +70,16 @@ public class MenuController {
 
         Game game = new Game(timeOffset, (byte)difficulty, pressChart);
 
-        openGameWindow(game); //TODO put method under logic
+        openGameWindow(game, songURIstring); //TODO put method under logic
     }
 
-    private void openGameWindow(Game game) {
+    private void openGameWindow(Game game, String songURIstring) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
             Parent root = loader.load();
             GameController gameController = (GameController) loader.getController();
             gameController.setGame(game);
+            gameController.setSongURIstring(songURIstring);
             Stage gameStage = new Stage();
             gameStage.setTitle("Clone Hero");
             gameStage.setScene(new Scene(root));
@@ -100,6 +101,12 @@ public class MenuController {
             editorStage.setTitle("Clone Hero Editor");
             editorStage.setScene(new Scene(root));
             editorStage.show();
+            File songFile = fileChooser.showOpenDialog(stage);
+            if (songFile == null) {
+                return;
+            }
+            editorController.setSongPath(songFile.toURI().toString());
+
             editorController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
         }

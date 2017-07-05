@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 
 import javafx.beans.binding.Bindings;
@@ -20,9 +22,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+
 
 public class EditorController {
 
+    private MediaPlayer mediaPlayer;
+    private String songPath;
     public Label countLabel;
     public Circle circle0;
     public Circle circle1;
@@ -89,6 +95,10 @@ public class EditorController {
         countLabel.setText("Recording");
         startBtn.setVisible(false);
 
+        Media sound = new Media(this.songPath);
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
         ObservableList<Press> data =
                 FXCollections.observableArrayList(
                         new Press(1, 50),
@@ -96,6 +106,10 @@ public class EditorController {
                 );
 
         tablePresses.setItems(data);
+    }
+
+    public void setSongPath(String path){
+        this.songPath = path;
     }
 }
 
