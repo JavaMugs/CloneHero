@@ -1,7 +1,5 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
-import java.util.Arrays;
-
 /**
  * Game logic class.
  * @author Daniel Hryzbil
@@ -43,19 +41,16 @@ public class Game {
 		BufferReport report = buffer.check(chord, currentTime);
 
 		hitsInRow += report.getHit();
-		if (report.getMiss() > 0)
-		{
+		if (report.getMiss() > 0) {
 			hitsInRow = 0;
 			score.resetMultiplier();
 		}
-		else if (hitsInRow >= HITS_IN_ROW_MULTIPLY)
-		{
+		else if (hitsInRow >= HITS_IN_ROW_MULTIPLY) {
 			hitsInRow = 0;
 			score.addMultiplier(MULTIPLIER_BASE);
 		}
 
-		if (report.getHit() > 0)
-		{
+		if (report.getHit() > 0) {
 			score.addScore(SCORE_BASE * report.getHit());
 		}
 
