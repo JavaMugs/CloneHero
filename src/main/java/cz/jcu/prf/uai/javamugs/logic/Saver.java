@@ -5,11 +5,16 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Saver {
 
     private List<Press> toSave;
+
+    public Saver() {
+        toSave = new ArrayList<>();
+    }
 
     /**
      * Adds a press to be processed.
