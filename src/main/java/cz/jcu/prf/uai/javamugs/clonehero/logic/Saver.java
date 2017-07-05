@@ -1,4 +1,4 @@
-package cz.jcu.prf.uai.javamugs.logic;
+package cz.jcu.prf.uai.javamugs.clonehero.logic;
 
 
 import java.io.BufferedWriter;

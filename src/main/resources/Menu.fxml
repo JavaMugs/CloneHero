@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="rootContainer" prefHeight="600.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.gui.MenuController">
+<BorderPane fx:id="rootContainer" prefHeight="600.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.clonehero.gui.MenuController">
    <bottom>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <right>

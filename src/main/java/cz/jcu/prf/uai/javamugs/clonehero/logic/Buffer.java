@@ -1,6 +1,7 @@
-package cz.jcu.prf.uai.javamugs.logic;
+package cz.jcu.prf.uai.javamugs.clonehero.logic;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.BufferReport;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
 
 import java.util.*;
 

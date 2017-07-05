@@ -1,8 +1,10 @@
-package cz.jcu.prf.uai.javamugs.logic;
+package cz.jcu.prf.uai.javamugs.clonehero.logic;
 
 /**
  * Created by ivank on 05.07.2017.
  */
+
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
 
 /**
  * Report of hites and misses and Chord of expected hits

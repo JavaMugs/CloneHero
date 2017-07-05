@@ -1,6 +1,6 @@
-package cz.jcu.prf.uai.javamugs;
+package cz.jcu.prf.uai.javamugs.clonehero;
 
-import cz.jcu.prf.uai.javamugs.gui.MenuController;
+import cz.jcu.prf.uai.javamugs.clonehero.gui.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

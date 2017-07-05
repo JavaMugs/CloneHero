@@ -1,8 +1,10 @@
-package cz.jcu.prf.uai.javamugs.gui;
+package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
-import cz.jcu.prf.uai.javamugs.logic.Game;
-import cz.jcu.prf.uai.javamugs.logic.Parser;
-import cz.jcu.prf.uai.javamugs.logic.PressChart;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -84,7 +86,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
             Parent root = loader.load();
-            GameController gameController = (GameController) loader.getController();
+            cz.jcu.prf.uai.javamugs.clonehero.gui.GameController gameController = (cz.jcu.prf.uai.javamugs.clonehero.gui.GameController) loader.getController();
             gameController.setGame(game);
             gameController.setSongURIstring(songURIstring);
             Stage gameStage = new Stage();
@@ -105,7 +107,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
-            EditorController editorController = (EditorController) loader.getController();
+            cz.jcu.prf.uai.javamugs.clonehero.gui.EditorController editorController = (cz.jcu.prf.uai.javamugs.clonehero.gui.EditorController) loader.getController();
             fileChooser.setTitle("Select song");
             fileChooser.getExtensionFilters().clear();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));

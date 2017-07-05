@@ -1,16 +1,15 @@
-package cz.jcu.prf.uai.javamugs.gui;
+package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
-import cz.jcu.prf.uai.javamugs.logic.Chord;
-import cz.jcu.prf.uai.javamugs.logic.Game;
-import cz.jcu.prf.uai.javamugs.logic.GameReport;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,9 +23,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class GameController {
@@ -167,7 +164,7 @@ public class GameController {
                 gc.setStroke(Color.LIGHTGREY);
             gc.strokeLine(x, 0, x, canvas.getHeight());
             //Circles
-            gc.setFill(CloneHeroColors.COLORARRAY[i]);
+            gc.setFill(cz.jcu.prf.uai.javamugs.clonehero.gui.CloneHeroColors.COLORARRAY[i]);
             gc.setLineWidth(3);
             x = 225 + i * 75;
             gc.fillOval(x, canvas.getHeight() - 75, 50, 50);
@@ -199,7 +196,7 @@ public class GameController {
 
             if (lights[i] > 0) {
                 lights[i]--;
-                Color color = CloneHeroColors.COLORARRAY[i];
+                Color color = cz.jcu.prf.uai.javamugs.clonehero.gui.CloneHeroColors.COLORARRAY[i];
                 gc.setFill(new Color(color.getRed(), color.getGreen(), color.getBlue(), 0.2));
                 gc.fillPolygon(
                         new double[]{
@@ -245,7 +242,7 @@ public class GameController {
             double ratio = (currentTime - startTime) / (endTime - startTime);
             this.y = (canvas.getHeight() - 25) * ratio - 50;
             GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.setFill(CloneHeroColors.COLORARRAY[color]);
+            gc.setFill(cz.jcu.prf.uai.javamugs.clonehero.gui.CloneHeroColors.COLORARRAY[color]);
             gc.fillOval(225 + 75 * color, y, 50, 50);
             if (currentTime >= endTime + 500) {
                 finished = true;

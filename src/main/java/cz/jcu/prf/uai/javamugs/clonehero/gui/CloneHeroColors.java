@@ -1,4 +1,4 @@
-package cz.jcu.prf.uai.javamugs.gui;
+package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
 import javafx.scene.paint.Color;
 
