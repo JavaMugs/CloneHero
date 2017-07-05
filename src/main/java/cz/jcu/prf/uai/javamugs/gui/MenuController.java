@@ -1,7 +1,9 @@
 package cz.jcu.prf.uai.javamugs.gui;
 
+import cz.jcu.prf.uai.javamugs.App;
 import cz.jcu.prf.uai.javamugs.logic.Game;
 import cz.jcu.prf.uai.javamugs.logic.Parser;
+import cz.jcu.prf.uai.javamugs.logic.Press;
 import cz.jcu.prf.uai.javamugs.logic.PressChart;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -12,26 +14,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MenuController {
+    private Stage stage;
     public Label speedLabel;
     public Label difficultyLabel;
     public Slider speedSlider;
     public Slider difficultySlider;
     public Button exitButton;
-    public Stage stage;
     public FileChooser fileChooser = new FileChooser();
+    public VBox rootContainer;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void initialize() {
+    public void start() {
+        this.stage = (Stage) rootContainer.getScene().getWindow();
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
         );
@@ -41,8 +41,10 @@ public class MenuController {
     }
 
     public void playButtonAction(ActionEvent event) {
-        //TODO get file, parse it, create Game instance open game window, make menu inactive
-        File songFile = fileChooser.showOpenDialog(stage);
+        openGameWindow(null); //TODO put method under logic
+        return;
+
+        /*File songFile = fileChooser.showOpenDialog(stage);
         if (songFile == null) {
             return;
         }
@@ -54,7 +56,7 @@ public class MenuController {
         }
         String pressChartPath = pressChartFile.getAbsolutePath();
 
-        /*Parser parser = new Parser();
+        Parser parser = new Parser();
         int timeOffset = (int)speedSlider.getValue();
 
         PressChart pressChart;
@@ -68,13 +70,19 @@ public class MenuController {
         int difficulty = (int)difficultySlider.getValue();
 
         Game game = new Game(timeOffset, (byte)difficulty, pressChart);*/
+    }
 
+    private void openGameWindow(Game game) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Game.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Clone Hero");
-            stage.setScene(new Scene(root));
-            stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
+            Parent root = loader.load();
+            GameController gameController = (GameController) loader.getController();
+            gameController.setGame(game);
+            Stage gameStage = new Stage();
+            gameStage.setTitle("Clone Hero");
+            gameStage.setScene(new Scene(root));
+            gameStage.show();
+            gameController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
@@ -83,7 +91,21 @@ public class MenuController {
     }
 
     public void editorButtonAction(ActionEvent event) {
-        //TODO
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
+            Parent root = loader.load();
+            GameController editorController = (EditorController) loader.getController();
+            Stage editorStage = new Stage();
+            editorStage.setTitle("Clone Hero Editor");
+            editorStage.setScene(new Scene(root));
+            editorController.setStage(editorStage);
+            editorStage.show();
+            editorController.start();
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void exitButtonAction(ActionEvent event) {

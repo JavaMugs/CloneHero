@@ -1,7 +1,6 @@
 package cz.jcu.prf.uai.javamugs.logic;
 
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,15 +11,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.io.File.separator;
 
 
 public class Parser {
 
     private static final int B_SIZE_LIMIT = 5*1024*1024;
+    private static final int COLOR_MAX = 4;
+    private static final int COLOR_MIN = 0;
     private static final String SEPARATOR = ":";
 
     /**
@@ -31,7 +30,7 @@ public class Parser {
      * @param fileName Path to the track file to be parsed.
      * @param timeOffset Defines the offset of chords draw time and press time.
      *                   Positive offset means draw comes before press (recommended).
-     * @return Parsed PressChart, never null.
+     * @return Parsed PressChart, can be empty, never null.
      * @throws IOException: failed opening file, unexpected format
      */
 	public PressChart parseFile(String fileName, double timeOffset) throws IOException {
@@ -46,10 +45,25 @@ public class Parser {
                                                     .map(line -> Arrays.asList(line.split(SEPARATOR)))
                                                     .collect(Collectors.toList());
 
-        for (List<String> line : parsedFile) {
-            double hitTime = Double.parseDouble(line.get(0));
-        }
 
+
+        try {
+            double hitTime, drawTime;
+
+            for (List<String> line : parsedFile) {
+
+                hitTime = Double.parseDouble(line.get(0));
+                drawTime = hitTime - timeOffset;
+                if(drawTime < 0.0) continue;
+                int color = Integer.parseInt(line.get(0));
+                if (color < COLOR_MIN || color > COLOR_MAX) throw new IOException("Color out of bounds");
+
+                result.add(new Press(color, drawTime));
+            }
+        }
+        catch(Exception e){
+            throw new IOException("Unexpected file format");
+        }
 
 
 
