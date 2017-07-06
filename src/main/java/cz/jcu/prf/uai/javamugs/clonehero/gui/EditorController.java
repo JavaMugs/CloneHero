@@ -162,7 +162,7 @@ public class EditorController {
                 try{
                     mediaPlayer.stop();
                 }catch (Exception e){
-                    e.printStackTrace();
+                    //Sometimes expected ;)
                 }
                 mediaPlayer = null;
             }
@@ -182,13 +182,13 @@ public class EditorController {
             startBtn.setText("Stop");
             isRecording = true;
             saveBtn.setVisible(false);
+            saver = new Saver();
 
             Media sound = new Media(this.songPath);
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
             textPresses.setText("");
         }else{
-            saver = new Saver();
             countLabel.setText("Editor");
             startBtn.setText("Start");
             isRecording = false;
