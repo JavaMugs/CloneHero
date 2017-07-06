@@ -53,9 +53,17 @@ public class GameController {
         this.stage = (Stage) rootContainer.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                mediaPlayer.stop();
+                try {
+                    mediaPlayer.stop();
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
                 mediaPlayer = null;
-                mainCycle.stop();
+                try {
+                    mainCycle.stop();
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
                 mainCycle = null;
             }
         });

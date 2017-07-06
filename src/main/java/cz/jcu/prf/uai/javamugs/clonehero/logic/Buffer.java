@@ -110,26 +110,15 @@ public class Buffer {
     private class BufferRecord {
         private Chord chord;
         private double time;
-        private int hits;
 
         public BufferRecord(Chord chord, double time) {
             this.chord = chord;
             this.time = time;
-            this.hits = 0;
-        }
-
-        public int getMisses() {
-            int expectedHits = 0;
-            for (boolean string : chord.getChords()) {
-                if (string) expectedHits++;
-            }
-            return expectedHits - hits;
         }
 
         public void checkHits(Chord pressedChord, Chord hitChordToUpdate) {
             for (int i = 0; i < chord.getChords().length; i++) {
                 if (chord.getChords()[i] && pressedChord.getChords()[i]) {
-                    hits++;
                     hitChordToUpdate.getChords()[i] = true;
                     chord.getChords()[i] = false;
                 }
@@ -150,10 +139,6 @@ public class Buffer {
 
         public double getTime() {
             return time;
-        }
-
-        public int getHits() {
-            return hits;
         }
 
         public Chord getChord() {
