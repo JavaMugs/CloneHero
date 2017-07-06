@@ -27,9 +27,9 @@ public class Saver {
 
     /**
      * Saves contained presses into .prc file.
-     *
+     * If provided path lacks .prc extension, it is added.
      * @param path Where file should be saved.
-     * @throws IOException in case there is a problem with processing the file.
+     * @throws IOException problem processing the file or no preses added to save.
      */
     public void save(String path) throws IOException {
         if (toSave.isEmpty()) throw new IOException("Nothing to save.");
@@ -43,7 +43,7 @@ public class Saver {
             while (!toSave.isEmpty()) {
                 toWrite = toSave.remove(0);
                 writer.println(toWrite.getDrawTime() + ":" + toWrite.getColor());   //Draw time is actually
-                // press time int this case.
+                                                                                    // press time int this case.
             }
             writer.close();
         } catch (IOException e) {

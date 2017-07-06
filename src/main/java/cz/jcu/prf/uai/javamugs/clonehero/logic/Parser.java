@@ -38,7 +38,7 @@ public class Parser {
 
         BufferedReader openedFile = attemptOpenFile(fileName);
 
-        List<List<String>> parsedFile = openedFile.lines()                                                            //turn reader into stream
+        List<List<String>> parsedFile = openedFile.lines()                          //turn reader into stream
                 .map(line -> Arrays.asList(line.split(SEPARATOR)))                  //turn every line into a two field list
                 .collect(Collectors.toList());                                      //collect the lists creating a 2D list
 
@@ -51,7 +51,7 @@ public class Parser {
                 hitTime = Double.parseDouble(line.get(0));
 
                 if (hitTime < prevHitTime)
-                    throw new IOException("Entries in wrong order.");                             //check for time ordering
+                    throw new IOException("Entries in wrong order.");               //check for time ordering
 
                 drawTime = hitTime - timeOffset;
                 if (drawTime < 0.0)
