@@ -73,4 +73,11 @@ public class Game {
 	public double getTimeOffset() {
 		return timeOffset;
 	}
+	
+	/**
+	 * @return actual score multiplier base
+	 */
+	public double getScoreMultiplierBase() {
+		return multiplierBase;
+	}
 }
