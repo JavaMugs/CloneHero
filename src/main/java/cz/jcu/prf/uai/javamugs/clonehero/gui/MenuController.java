@@ -24,7 +24,6 @@ import java.io.IOException;
 
 public class MenuController {
     private Stage stage;
-    public Label speedLabel;
     public Label difficultyLabel;
     public Slider speedSlider;
     public Slider difficultySlider;
@@ -46,9 +45,6 @@ public class MenuController {
         });
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
-        );
-        speedLabel.textProperty().bind(
-                Bindings.format("%.0f", speedSlider.valueProperty())
         );
     }
 
