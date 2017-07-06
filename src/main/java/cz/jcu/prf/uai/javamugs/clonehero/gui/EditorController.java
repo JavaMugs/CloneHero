@@ -14,9 +14,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 
 import javafx.event.ActionEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
+import java.io.File;
 
 
 public class EditorController {
@@ -34,6 +37,7 @@ public class EditorController {
     public Circle circle4;
     public Button startBtn;
     public TextArea textPresses;
+    public FileChooser fileChooser = new FileChooser();
 
     /**
      * Round double to x decimals
@@ -125,13 +129,38 @@ public class EditorController {
     }
 
     /**
+     * Save recorded file
+     */
+    private  void saveFile(){
+        try{
+            fileChooser.setTitle("Select PressChart file");
+            fileChooser.getExtensionFilters().clear();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PressChart file", "*.prc"));
+            File pressChartFile = null;
+
+            while(pressChartFile == null){
+                pressChartFile = fileChooser.showSaveDialog(startBtn.getScene().getWindow());
+            }
+
+            String pressChartPath = pressChartFile.getAbsolutePath();
+            saver.save(pressChartPath);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Start view
      */
     public void start() {
         Stage stage = (Stage) startBtn.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                mediaPlayer.stop();
+                try{
+                    mediaPlayer.stop();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 mediaPlayer = null;
             }
         });
@@ -161,21 +190,13 @@ public class EditorController {
             mediaPlayer.stop();
             mediaPlayer = null;
 
-            try{
-                saver.save(songPath.replace(".mp3", ""));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            saveFile();
         }
 
         mediaPlayer.setOnEndOfMedia(new Runnable() {
 
             public void run() {
-                try{
-                    saver.save(songPath.replace(".mp3", ""));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                saveFile();
             }
         });
 
