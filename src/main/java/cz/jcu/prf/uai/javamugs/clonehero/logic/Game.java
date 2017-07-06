@@ -54,6 +54,9 @@ public class Game {
 		return new GameReport(score, next, report.getHitChord(), report.getMissChord());
 	}
 	
+	/**
+	 * @return speed of game (offset between drawing and hitting chords)
+	 */
 	public double getTimeOffset() {
 		return timeOffset;
 	}
