@@ -26,10 +26,10 @@ public class GameTest extends TestCase {
 		presses.add(new Press(Chord.MAGENTA,  900.0));
         presses.add(new Press(Chord.BLUE,    1000.0));
         presses.add(new Press(Chord.MAGENTA, 1100.0));
-        presses.add(new Press(Chord.BLUE,    1200.0));
+        presses.add(new Press(Chord.MAGENTA, 1200.0));
         presses.add(new Press(Chord.BLUE,    1300.0));
         presses.add(new Press(Chord.RED,     1400.0));
-		/*
+		
         PressChart pressChart = new PressChart(presses);
 		Game game = new Game(TIME_OFFSET, DIFFICULTY, pressChart);
 		assertNotNull(game);
@@ -42,64 +42,71 @@ public class GameTest extends TestCase {
 		double expectedMultiplier = 1.0;
 		
 		// no keys are pressed
-		report = game.tick(currentTime, emptyInput);
-		assertEquals(expectedScore, report.getScore());
-		assertEquals(expectedMultiplier, report.getMultiplier());
-		currentTime += 100;
-		
-		// key is pressed but not the right one (no score is added)
-		for (int i = 0; i < 3; i++) {
-			report = game.tick(currentTime, userInput);
+		for (int i = 0; i < 5; i++) {
+			report = game.tick(currentTime, emptyInput);
 			assertEquals(expectedScore, report.getScore());
 			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 100;
 		}
 		
-		// no keys again
+		// key is pressed, score and multiplier are added
+		report = game.tick(currentTime, userInput);
+		expectedScore += Game.SCORE_BASE;
+		expectedMultiplier += game.getScoreMultiplierBase();
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		// no keys again, score and multiplier should stay unchanged
 		report = game.tick(currentTime, emptyInput);
 		assertEquals(expectedScore, report.getScore());
 		assertEquals(expectedMultiplier, report.getMultiplier());
 		currentTime += 100;
 		
-		// key is pressed and it's valid
-		for (int i = 0; i < 3; i++) {
-			expectedScore += Game.SCORE_BASE * expectedMultiplier;
-			expectedMultiplier += Game.MULTIPLIER_BASE;
-			report = game.tick(currentTime, userInput);
+		// key is pressed but not the right one, no score is added, reset multiplier
+		report = game.tick(currentTime, userInput);
+		expectedMultiplier = 1.0;
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		// no keys are pressed
+		for (int i = 0; i < 5; i++) {
+			report = game.tick(currentTime, emptyInput);
 			assertEquals(expectedScore, report.getScore());
 			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 100;
 		}
 		
-		for (int i = 0; i < 3; i++) {
-			expectedScore += Game.SCORE_BASE * expectedMultiplier;
-			expectedMultiplier += Game.MULTIPLIER_BASE;
-			report = game.tick(currentTime, userInput);
+		// key is pressed, score and multiplier are added
+		report = game.tick(currentTime, userInput);
+		expectedScore += Game.SCORE_BASE;
+		expectedMultiplier += game.getScoreMultiplierBase();
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		// key is pressed, score is multiplied and added, multiplier is added
+		report = game.tick(currentTime, userInput);
+		expectedScore += Game.SCORE_BASE * expectedMultiplier;
+		expectedMultiplier += game.getScoreMultiplierBase();
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		// key is pressed but not the right one, no score is added, reset multiplier
+		report = game.tick(currentTime, userInput);
+		expectedMultiplier = 1.0;
+		assertEquals(expectedScore, report.getScore());
+		assertEquals(expectedMultiplier, report.getMultiplier());
+		currentTime += 100;
+		
+		// no keys are pressed
+		for (int i = 0; i < 20; i++) {
+			report = game.tick(currentTime, emptyInput);
 			assertEquals(expectedScore, report.getScore());
 			assertEquals(expectedMultiplier, report.getMultiplier());
 			currentTime += 100;
-		}		
-		
-		report = game.tick(currentTime, emptyInput);
-		assertEquals(expectedScore, report.getScore());
-		assertEquals(expectedMultiplier, report.getMultiplier());
-		currentTime += 100;
-		expectedScore += Game.SCORE_BASE;
-		expectedMultiplier = 1.0+Game.MULTIPLIER_BASE;
-		report = game.tick(currentTime, userInput);
-		assertEquals(expectedScore, report.getScore());
-		assertEquals(expectedMultiplier, report.getMultiplier());
-		expectedScore += Game.SCORE_BASE;
-		currentTime += 100;
-		
-		report = game.tick(currentTime, userInput);
-		assertEquals(expectedScore, report.getScore());
-		assertEquals(1.0+Game.MULTIPLIER_BASE, report.getMultiplier());
-		currentTime += 100;
-		
-		report = game.tick(currentTime, userInput);
-		assertEquals(expectedScore, report.getScore());
-		assertEquals(1.0, report.getMultiplier());
-		*/
+		}
 	}
 }
