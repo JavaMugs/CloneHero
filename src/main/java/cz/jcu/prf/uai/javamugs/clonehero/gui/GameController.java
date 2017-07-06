@@ -48,6 +48,9 @@ public class GameController {
         this.songURIstring = songURIstring;
     }
 
+    /**
+     * Method to be called on start, after initialization
+     */
     public void start() {
         this.stage = (Stage) rootContainer.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -136,6 +139,10 @@ public class GameController {
         mainCycle.start();
     }
 
+    /**
+     * Method to be called on song end
+     * @param lastReport last GameReport
+     */
     private void end(GameReport lastReport) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Clone Hero");
@@ -150,6 +157,10 @@ public class GameController {
         alert.show();
     }
 
+    /**
+     * Renders graphics
+     * @param report current GameReport
+     */
     private void renderCanvas(GameReport report) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(new Image(getClass().getResource("/bg.jpg").toString()), 0, 0);
@@ -238,6 +249,11 @@ public class GameController {
         private double startTime;
         private double endTime;
 
+        /**
+         * @param color number of string
+         * @param timeOffset length of the animation
+         * @param startTime time of the animation start
+         */
         public BallAnimation(int color, double timeOffset, double startTime) {
             this.color = color;
             this.y = -50;
@@ -246,6 +262,10 @@ public class GameController {
             this.endTime = startTime + timeOffset;
         }
 
+        /**
+         * Renders the animation
+         * @param currentTime current song time
+         */
         public void animate(double currentTime) {
             double ratio = (currentTime - startTime) / (endTime - startTime);
             this.y = (canvas.getHeight() - 25) * ratio - 50;
@@ -257,6 +277,9 @@ public class GameController {
             }
         }
 
+        /**
+         * @return true if animation is finished
+         */
         public boolean isFinished() {
             return finished;
         }
