@@ -17,8 +17,8 @@ public class GameReport {
 	 * Creates report of game status.
 	 * @param score actual score. Never null.
 	 * @param chordToDraw next chord to draw.
-	 * @param hitChord chord with hits
-	 * @param missChord chord with hits
+	 * @param hitChord chord with hits.
+	 * @param missChord chord with misses.
 	 */
 	public GameReport(Score score, Chord chordToDraw, Chord hitChord, Chord missChord) {
 		this.score = score;
@@ -42,7 +42,7 @@ public class GameReport {
 	}
 	
 	/**
-	 * @return this chord should be drawn
+	 * @return Chord to draw
 	 */
 	public Chord getChordToDraw() {
 		return chordToDraw;
