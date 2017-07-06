@@ -52,10 +52,14 @@ public class PressChart {
 			arr[presses[i].getColor()] = true;
 
 			i++;
-		};
+		}
 
 		this.lastCalledItem = i;
 
 		return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
+	}
+
+	public Press[] getPresses() {
+		return presses;
 	}
 }
