@@ -17,7 +17,7 @@
                         <Insets left="50.0" top="50.0" />
                     </StackPane.margin>
                     <font>
-                        <Font name="Droid Sans" size="48.0" />
+                        <Font name="Droid Sans" size="36.0" />
                     </font>
                 </Label>
                 <Label fx:id="multiplierLabel" textAlignment="RIGHT" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
