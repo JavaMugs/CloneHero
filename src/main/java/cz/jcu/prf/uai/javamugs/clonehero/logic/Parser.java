@@ -55,12 +55,12 @@ public class Parser {
 
                 drawTime = hitTime - timeOffset;
                 if (drawTime < 0.0)
-                    continue;                                                                            //discard early presses
+                    continue;                                                       //discard early presses
                 int color = Integer.parseInt(line.get(1));
                 if (color < COLOR_MIN || color > COLOR_MAX)
-                    throw new IOException("Color out of bounds");               //check for unknown color
+                    throw new IOException("Color out of bounds");                   //check for unknown color
 
-                result.add(new Press(color, drawTime));                                                                 //add parsed line to result
+                result.add(new Press(color, drawTime));                             //add parsed line to result
             }
         } catch (Exception e) {
             throw new IOException("Unexpected file format " + e.getMessage());

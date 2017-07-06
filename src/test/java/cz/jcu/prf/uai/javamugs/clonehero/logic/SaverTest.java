@@ -53,6 +53,12 @@ public class SaverTest extends TestCase {
         assertTrue(comparePressCharts(originalChart, newChart));
     }
 
+    /**
+     * Compares if two PressCharts have the same content.
+     * @param a
+     * @param b
+     * @return true if press colors and times match in provided PressCharts
+     */
     private boolean comparePressCharts(PressChart a, PressChart b) {
 
         Press aPresses[] = a.getPresses();
