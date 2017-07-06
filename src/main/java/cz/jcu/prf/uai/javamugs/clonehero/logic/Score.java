@@ -32,7 +32,7 @@ public class Score {
 	}
 	
 	/**
-	 * @param score added score. It's multiplied by current multiplier.
+	 * @param number added score. It's multiplied by current multiplier.
 	 */
 	public void addScore(long number) {
 		score += number*multiplier;
@@ -53,7 +53,7 @@ public class Score {
 	}
 	
 	/**
-	 * @param multiplier sets multiplier to new value.
+	 * @param number added multiplier.
 	 */
 	public void addMultiplier(double number) {
 		multiplier += number;
