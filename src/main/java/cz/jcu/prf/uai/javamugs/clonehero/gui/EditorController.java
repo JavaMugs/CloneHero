@@ -36,6 +36,7 @@ public class EditorController {
     public Circle circle3;
     public Circle circle4;
     public Button startBtn;
+    public Button saveBtn;
     public TextArea textPresses;
     public FileChooser fileChooser = new FileChooser();
 
@@ -95,7 +96,6 @@ public class EditorController {
      * Start listen keys to press
      */
     private void startListenButtons(){
-        saver = new Saver();
 
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
@@ -136,10 +136,11 @@ public class EditorController {
             fileChooser.setTitle("Select PressChart file");
             fileChooser.getExtensionFilters().clear();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PressChart file", "*.prc"));
-            File pressChartFile = null;
-
-            while(pressChartFile == null){
+                File pressChartFile = null;
                 pressChartFile = fileChooser.showSaveDialog(startBtn.getScene().getWindow());
+
+                if(pressChartFile == null){
+                    return;
             }
 
             String pressChartPath = pressChartFile.getAbsolutePath();
@@ -153,6 +154,8 @@ public class EditorController {
      * Start view
      */
     public void start() {
+        saveBtn.setVisible(false);
+
         Stage stage = (Stage) startBtn.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
@@ -178,29 +181,28 @@ public class EditorController {
             countLabel.setText("Recording");
             startBtn.setText("Stop");
             isRecording = true;
+            saveBtn.setVisible(false);
 
             Media sound = new Media(this.songPath);
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
+            textPresses.setText("");
         }else{
+            saver = new Saver();
             countLabel.setText("Editor");
             startBtn.setText("Start");
             isRecording = false;
+            saveBtn.setVisible(true);
 
             mediaPlayer.stop();
             mediaPlayer = null;
-
-            saveFile();
         }
 
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-
-            public void run() {
-                saveFile();
-            }
-        });
-
         startListenButtons();
+    }
+
+    public void saveBtn(ActionEvent event){
+        saveFile();
     }
 
     /**
