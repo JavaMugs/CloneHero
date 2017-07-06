@@ -5,6 +5,7 @@ import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,11 @@ public class MenuController {
         rootContainer.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/splash.jpg").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         this.stage = (Stage) rootContainer.getScene().getWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.exit(0);
+            }
+        });
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
         );
@@ -145,7 +152,7 @@ public class MenuController {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Method to be called on exit button click
      * @param event click event
