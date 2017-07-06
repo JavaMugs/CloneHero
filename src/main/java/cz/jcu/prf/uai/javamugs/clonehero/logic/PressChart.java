@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class PressChart {
 
     private Press[] presses;
-    private ArrayList<Press> pressesBackup;
     private int lastCalledItem;
 
     /**
@@ -21,12 +20,10 @@ public class PressChart {
 
         int size = presses.size();
         this.presses = new Press[size];
-        this.pressesBackup = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Press press = new Press(presses.get(i).getColor(), presses.get(i).getDrawTime());
 
             this.presses[i] = press;
-            pressesBackup.add(press);
         }
 
         this.lastCalledItem = 0;
@@ -61,6 +58,10 @@ public class PressChart {
         return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
     }
 
+    /**
+     * get Array of press chart
+     * @return
+     */
     public Press[] getPresses() {
         return presses;
     }

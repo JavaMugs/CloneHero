@@ -109,6 +109,11 @@ public class Buffer {
             this.time = time;
         }
 
+        /**
+         * Updates chord with hits
+         * @param pressedChord chord of pressed keys
+         * @param hitChordToUpdate chord to update
+         */
         public void checkHits(Chord pressedChord, Chord hitChordToUpdate) {
             for (int i = 0; i < chord.getChords().length; i++) {
                 if (chord.getChords()[i] && pressedChord.getChords()[i]) {
@@ -118,12 +123,21 @@ public class Buffer {
             }
         }
 
+        /**
+         * Updates chord with unexpected presses (misses)
+         * @param pressedChord chord of pressed keys
+         * @param missChordToUpdate chord to update
+         */
         public void checkUnexpectedPresses(Chord pressedChord, Chord missChordToUpdate) {
             for (int i = 0; i < chord.getChords().length; i++) {
                 if (!chord.getChords()[i] && pressedChord.getChords()[i]) missChordToUpdate.getChords()[i] = true;
             }
         }
 
+        /**
+         * Updates chord with missed presses
+         * @param missChordToUpdate chord to update
+         */
         public void checkMisses(Chord missChordToUpdate) {
             for (int i = 0; i < chord.getChords().length; i++) {
                 if (chord.getChords()[i]) missChordToUpdate.getChords()[i] = true;

@@ -16,8 +16,8 @@ public class BufferReport {
     /**
      * Creates pair of hits and misses
      *
-     * @param hit  number of hits
-     * @param miss number of misses
+     * @param hitChord chord of hits
+     * @param missChord chord of misses
      */
     public BufferReport(Chord hitChord, Chord missChord) {
         this.hit = 0;

@@ -30,6 +30,9 @@ public class MenuController {
     public FileChooser fileChooser = new FileChooser();
     public BorderPane rootContainer;
 
+    /**
+     * Method to be called on start, after initialization
+     */
     public void start() {
         rootContainer.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/splash.jpg").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
@@ -42,6 +45,10 @@ public class MenuController {
         );
     }
 
+    /**
+     * Method to be called on play button click
+     * @param event click event
+     */
     public void playButtonAction(ActionEvent event) {
         fileChooser.setTitle("Select song");
         fileChooser.getExtensionFilters().clear();
@@ -83,6 +90,11 @@ public class MenuController {
         openGameWindow(game, songURIstring); //TODO put method under logic
     }
 
+    /**
+     * Creates Game window
+     * @param game game core
+     * @param songURIstring path to the song
+     */
     private void openGameWindow(Game game, String songURIstring) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
@@ -103,6 +115,10 @@ public class MenuController {
         }
     }
 
+    /**
+     * Method to be called on editor button click
+     * @param event click event
+     */
     public void editorButtonAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
@@ -129,7 +145,11 @@ public class MenuController {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Method to be called on exit button click
+     * @param event click event
+     */
     public void exitButtonAction(ActionEvent event) {
         stage.close();
     }
