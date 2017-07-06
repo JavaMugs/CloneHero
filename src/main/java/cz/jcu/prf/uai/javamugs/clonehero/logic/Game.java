@@ -11,12 +11,15 @@ import cz.jcu.prf.uai.javamugs.clonehero.logic.Score;
 public class Game {
 
 	public static final int SCORE_BASE = 100;
-	public static final double MULTIPLIER_BASE = 0.5;
+	public static final double MULTIPLIER_BASE_EASY = 0.2;
+	public static final double MULTIPLIER_BASE_NORMAL = 0.5;
+	public static final double MULTIPLIER_BASE_HARD = 0.8;
 
 	private double timeOffset;
 	private PressChart pressChart;
 	private Score score;
 	private Buffer buffer;
+	private double multiplierBase;
 
 	/**
 	 * Creates game logic.
@@ -29,6 +32,16 @@ public class Game {
 		this.pressChart = pressChart;
 		score = new Score();
 		buffer = new Buffer(difficulty);
+		switch (difficulty) {
+		case 1:
+			multiplierBase = MULTIPLIER_BASE_EASY;
+			break;
+		case 2:
+			multiplierBase = MULTIPLIER_BASE_NORMAL;
+			break;
+		default:
+			multiplierBase = MULTIPLIER_BASE_HARD;
+		}
 	}
 	
 	/**
@@ -48,7 +61,7 @@ public class Game {
 
 		if (report.getHit() > 0) {
 			score.addScore(SCORE_BASE * report.getHit());
-			score.addMultiplier(MULTIPLIER_BASE);
+			score.addMultiplier(multiplierBase);
 		}
 
 		return new GameReport(score, next, report.getHitChord(), report.getMissChord());
