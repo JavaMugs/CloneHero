@@ -40,10 +40,17 @@ public class Saver {
             PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
             Press toWrite;
+            long prevTime = 0 , time;
             while (!toSave.isEmpty()) {
                 toWrite = toSave.remove(0);
-                writer.println(toWrite.getDrawTime() + ":" + toWrite.getColor());   //Draw time is actually
-                                                                                    // press time int this case.
+
+                time = (long) toWrite.getDrawTime();
+                if ((time - prevTime) < 50)
+                    time = prevTime;
+
+                writer.println(time + ":" + toWrite.getColor());   //Draw time is actually
+                                                                   // press time int this case.
+                prevTime = time;
             }
             writer.close();
         } catch (IOException e) {

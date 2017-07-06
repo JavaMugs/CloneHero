@@ -4,7 +4,7 @@
 
     <groupId>cz.jcu.prf.uai.javamugs</groupId>
     <artifactId>clonehero</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>Clone Hero</name>
