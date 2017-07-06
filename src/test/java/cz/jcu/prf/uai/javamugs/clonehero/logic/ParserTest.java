@@ -7,7 +7,7 @@ import java.io.IOException;
 public class ParserTest extends TestCase {
 
     private static final String TEST_CHARTS_PATH = "./tracks/testCharts/";
-    private static final String VALID_FILE_PATH = TEST_CHARTS_PATH + "ValidChartValidChart.prc";
+    private static final String VALID_FILE_PATH = TEST_CHARTS_PATH + "ValidChart.prc";
     private static final String MISSING_EXTENSION_PATH = TEST_CHARTS_PATH + "MissingExtension";
     private static final String TOO_LARGE_FILE_PATH = TEST_CHARTS_PATH + "TooLarge.prc";
     private static final String DROPPING_EARLY_PRESSES_PATH = TEST_CHARTS_PATH + "DroppingEarlyPresses.prc";
