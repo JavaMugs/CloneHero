@@ -3,7 +3,6 @@ package cz.jcu.prf.uai.javamugs.clonehero.gui;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -40,6 +39,7 @@ public class GameController {
     public Canvas canvas;
     public BorderPane rootContainer;
     public Label scoreLabel;
+    public Label multiplierLabel;
 
     public void setGame(Game game) {
         this.game = game;
@@ -220,7 +220,8 @@ public class GameController {
                         3);
             }
         }
-        scoreLabel.setText(String.valueOf(report.getScore()) + "\n" + String.valueOf(report.getMultiplier() + "x"));
+        scoreLabel.setText(String.valueOf(report.getScore()));
+        multiplierLabel.setText(String.format("%.1f", report.getMultiplier()) + "x");
         for (int i = 0; i < ballAnimations.size(); i++) {
             if (ballAnimations.get(i).isFinished()) {
                 ballAnimations.remove(i);
