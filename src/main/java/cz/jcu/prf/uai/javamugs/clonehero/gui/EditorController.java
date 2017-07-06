@@ -41,10 +41,6 @@ public class EditorController {
 
     /**
      * Round double to x decimals
-     *
-     * @param value
-     * @param places
-     * @return
      */
     private double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -84,6 +80,10 @@ public class EditorController {
         textPresses.setText(colorName + "\t= " + Double.toString(round(press.getDrawTime(), 4)) + "\n" + textPresses.getText());
     }
 
+    /**
+     * Make fade in on button press
+     * @param c circle which is pressed
+     */
     private void setFadeIn(Circle c) {
         FadeTransition ft = new FadeTransition(Duration.millis(300), c);
         ft.setFromValue(0.3);
@@ -94,7 +94,7 @@ public class EditorController {
     }
 
     /**
-     * Start listen keys to press
+     * Start listen keys to press and start saving
      */
     private void startListenButtons() {
 
@@ -174,7 +174,7 @@ public class EditorController {
     }
 
     /**
-     * Start button
+     * FE start/stop button
      *
      * @param event
      */
@@ -203,6 +203,10 @@ public class EditorController {
         startListenButtons();
     }
 
+    /**
+     * FE button to save
+     * @param event
+     */
     public void saveBtn(ActionEvent event) {
         saveFile();
     }
