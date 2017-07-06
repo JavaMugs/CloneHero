@@ -19,13 +19,13 @@ public class Buffer {
         bufferRecords = new ArrayList<BufferRecord>();
         switch (difficulty) {
             case 1:
-                this.tolerance = 150;
+                this.tolerance = 200;
                 break;
             case 2:
-                this.tolerance = 100;
+                this.tolerance = 150;
                 break;
             case 3:
-                this.tolerance = 50;
+                this.tolerance = 100;
                 break;
         }
     }

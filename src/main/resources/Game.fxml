@@ -3,29 +3,29 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<BorderPane fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cz.jcu.prf.uai.javamugs.clonehero.gui.GameController">
+
+<BorderPane fx:id="rootContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.jcu.prf.uai.javamugs.clonehero.gui.GameController">
     <center>
         <StackPane BorderPane.alignment="CENTER">
             <children>
-                <Canvas fx:id="canvas" height="600.0" width="800.0"/>
+                <Canvas fx:id="canvas" height="600.0" width="800.0" />
                 <Label fx:id="scoreLabel" textFill="WHITE" StackPane.alignment="TOP_LEFT">
                     <StackPane.margin>
-                        <Insets left="50.0" top="50.0"/>
+                        <Insets left="50.0" top="50.0" />
                     </StackPane.margin>
                     <font>
-                        <Font size="48.0"/>
+                        <Font name="Droid Sans" size="48.0" />
                     </font>
                 </Label>
                 <Label fx:id="multiplierLabel" textAlignment="RIGHT" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
                     <StackPane.margin>
-                        <Insets right="50.0" top="50.0"/>
+                        <Insets right="50.0" top="50.0" />
                     </StackPane.margin>
                     <font>
-                        <Font size="48.0"/>
+                        <Font name="Droid Sans" size="48.0" />
                     </font>
                 </Label>
             </children>
