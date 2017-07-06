@@ -3,16 +3,12 @@ package cz.jcu.prf.uai.javamugs.clonehero.gui;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -68,8 +64,12 @@ public class MenuController {
         PressChart pressChart;
         try {
             pressChart = parser.parseFile(pressChartPath, timeOffset);
-        } catch(Exception ex) {
-            ex.printStackTrace();
+        } catch(IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Clone Hero");
+            alert.setHeaderText("Error while parsing the file!");
+            alert.setContentText(ex.getMessage());
+            alert.show();
             return;
         }
 
