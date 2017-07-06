@@ -36,14 +36,14 @@ public class MenuController {
      * Method to be called on start, after initialization
      */
     public void start() {
+        rootContainer.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/splash.jpg").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        this.stage = (Stage) rootContainer.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 System.exit(0);
             }
         });
-        rootContainer.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/splash.jpg").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, null)));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        this.stage = (Stage) rootContainer.getScene().getWindow();
         difficultyLabel.textProperty().bind(
                 Bindings.format("%.0f", difficultySlider.valueProperty())
         );
