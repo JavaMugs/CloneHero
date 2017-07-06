@@ -23,46 +23,46 @@ public class PressChartTest extends TestCase {
         PressChart ps = new PressChart(arrList);
 
         boolean[] actual = ps.next(5.0).getChords();
-        boolean[] expected = new boolean[] {false, false, false, false, false};
-        for(int i = 0; i < actual.length; i++){
+        boolean[] expected = new boolean[]{false, false, false, false, false};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
         actual = ps.next(18.0).getChords();
-        expected = new boolean[] {true, true, false, false, true};
-        for(int i = 0; i < actual.length; i++){
+        expected = new boolean[]{true, true, false, false, true};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
 
         actual = ps.next(21.0).getChords();
-        expected = new boolean[] {false, false, false, false, true};
-        for(int i = 0; i < actual.length; i++){
+        expected = new boolean[]{false, false, false, false, true};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
         actual = ps.next(50.0).getChords();
-        expected = new boolean[] {false, true, false, true, true};
-        for(int i = 0; i < actual.length; i++){
+        expected = new boolean[]{false, true, false, true, true};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
         actual = ps.next(70.0).getChords();
-        expected = new boolean[] {false, false, false, false, false};
-        for(int i = 0; i < actual.length; i++){
+        expected = new boolean[]{false, false, false, false, false};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
         actual = ps.next(40.0).getChords();
-        expected = new boolean[] {false, false, false, false, false};
-        for(int i = 0; i < actual.length; i++){
+        expected = new boolean[]{false, false, false, false, false};
+        for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
 
-        try{
+        try {
             PressChart ps2 = new PressChart(null);
             fail();
-        }catch (Exception e){
+        } catch (Exception e) {
             //Expected
         }
 

@@ -4,8 +4,6 @@ package cz.jcu.prf.uai.javamugs.clonehero.logic;
  * Created by ivank on 05.07.2017.
  */
 
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
-
 /**
  * Report of hites and misses and Chord of expected hits
  */
@@ -24,11 +22,11 @@ public class BufferReport {
     public BufferReport(Chord hitChord, Chord missChord) {
         this.hit = 0;
         for (int i = 0; i < hitChord.getChords().length; i++) {
-            if(hitChord.getChords()[i]) this.hit++;
+            if (hitChord.getChords()[i]) this.hit++;
         }
         this.miss = 0;
         for (int i = 0; i < missChord.getChords().length; i++) {
-            if(missChord.getChords()[i]) this.miss++;
+            if (missChord.getChords()[i]) this.miss++;
         }
         this.hitChord = hitChord;
         this.missChord = missChord;

@@ -21,20 +21,18 @@ public class ParserTest extends TestCase {
         chart = parser.parseFile(VALID_FILE_PATH, TIME_OFFSET);
         assertNotNull(chart);
 
-        try{
+        try {
             parser.parseFile(MISSING_EXTENSION_PATH, TIME_OFFSET);
             fail();
-        }
-        catch(IOException e){
-            if(!e.getMessage().equals("Unexpected extension")) fail();
+        } catch (IOException e) {
+            if (!e.getMessage().equals("Unexpected extension")) fail();
         }
 
-        try{
+        try {
             parser.parseFile(TOO_LARGE_FILE_PATH, TIME_OFFSET);
             fail();
-        }
-        catch(IOException e){
-            if(!e.getMessage().equals("File is too large")) fail();
+        } catch (IOException e) {
+            if (!e.getMessage().equals("File is too large")) fail();
         }
 
         //TODO test unauthorized access attempt
@@ -42,12 +40,11 @@ public class ParserTest extends TestCase {
         chart = parser.parseFile(DROPPING_EARLY_PRESSES_PATH, TIME_OFFSET);
         assertTrue(chart.next(50000).isEmpty());
 
-        try{
+        try {
             parser.parseFile(UNEXPECTED_FORMAT_PATH, TIME_OFFSET);
             fail();
-        }
-        catch(IOException e){
-            if(!e.getMessage().startsWith("Unexpected file format ")) fail();
+        } catch (IOException e) {
+            if (!e.getMessage().startsWith("Unexpected file format ")) fail();
         }
     }
 }

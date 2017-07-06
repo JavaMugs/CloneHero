@@ -1,19 +1,18 @@
 package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Press;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Saver;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Press;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Saver;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
-
-import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -42,6 +41,7 @@ public class EditorController {
 
     /**
      * Round double to x decimals
+     *
      * @param value
      * @param places
      * @return
@@ -57,12 +57,13 @@ public class EditorController {
 
     /**
      * Throw actual press to textarea
+     *
      * @param press
      */
-    private void setNewPressToTextarea(Press press){
+    private void setNewPressToTextarea(Press press) {
         String colorName = "";
 
-        switch (press.getColor()){
+        switch (press.getColor()) {
             case 0:
                 colorName = "Red\t";
                 break;
@@ -83,7 +84,7 @@ public class EditorController {
         textPresses.setText(colorName + "\t= " + Double.toString(round(press.getDrawTime(), 4)) + "\n" + textPresses.getText());
     }
 
-    private void setFadeIn(Circle c){
+    private void setFadeIn(Circle c) {
         FadeTransition ft = new FadeTransition(Duration.millis(300), c);
         ft.setFromValue(0.3);
         ft.setToValue(1);
@@ -95,11 +96,11 @@ public class EditorController {
     /**
      * Start listen keys to press
      */
-    private void startListenButtons(){
+    private void startListenButtons() {
 
         startBtn.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
-                switch (ke.getCode()){
+                switch (ke.getCode()) {
                     case A:
                         actualPress = new Press(Chord.RED, mediaPlayer.getCurrentTime().toMillis());
                         setFadeIn(circle0);
@@ -131,21 +132,21 @@ public class EditorController {
     /**
      * Save recorded file
      */
-    private  void saveFile(){
-        try{
+    private void saveFile() {
+        try {
             fileChooser.setTitle("Select PressChart file");
             fileChooser.getExtensionFilters().clear();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PressChart file", "*.prc"));
-                File pressChartFile = null;
-                pressChartFile = fileChooser.showSaveDialog(startBtn.getScene().getWindow());
+            File pressChartFile = null;
+            pressChartFile = fileChooser.showSaveDialog(startBtn.getScene().getWindow());
 
-                if(pressChartFile == null){
-                    return;
+            if (pressChartFile == null) {
+                return;
             }
 
             String pressChartPath = pressChartFile.getAbsolutePath();
             saver.save(pressChartPath);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -159,9 +160,9 @@ public class EditorController {
         Stage stage = (Stage) startBtn.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                try{
+                try {
                     mediaPlayer.stop();
-                }catch (Exception e){
+                } catch (Exception e) {
                     //Sometimes expected ;)
                 }
                 mediaPlayer = null;
@@ -174,10 +175,11 @@ public class EditorController {
 
     /**
      * Start button
+     *
      * @param event
      */
-    public void startBtnAction(ActionEvent event){
-        if(!isRecording){
+    public void startBtnAction(ActionEvent event) {
+        if (!isRecording) {
             countLabel.setText("Recording");
             startBtn.setText("Stop");
             isRecording = true;
@@ -188,7 +190,7 @@ public class EditorController {
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
             textPresses.setText("");
-        }else{
+        } else {
             countLabel.setText("Editor");
             startBtn.setText("Start");
             isRecording = false;
@@ -201,15 +203,16 @@ public class EditorController {
         startListenButtons();
     }
 
-    public void saveBtn(ActionEvent event){
+    public void saveBtn(ActionEvent event) {
         saveFile();
     }
 
     /**
      * Set song path
+     *
      * @param path
      */
-    public void setSongPath(String path){
+    public void setSongPath(String path) {
         this.songPath = path;
     }
 }

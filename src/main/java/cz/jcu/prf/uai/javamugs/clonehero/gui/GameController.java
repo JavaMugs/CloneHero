@@ -1,14 +1,13 @@
 package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
-import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
+import cz.jcu.prf.uai.javamugs.clonehero.logic.GameReport;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-
 import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -128,7 +127,7 @@ public class GameController {
                 }
                 renderCanvas(report);
                 pressedButtons = new Chord(false, false, false, false, false);
-                if(mediaPlayer.getCurrentTime().toMillis() >= mediaPlayer.getTotalDuration().toMillis()) {
+                if (mediaPlayer.getCurrentTime().toMillis() >= mediaPlayer.getTotalDuration().toMillis()) {
                     stop();
                     end(report);
                 }

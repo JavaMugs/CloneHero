@@ -35,10 +35,10 @@ public class SaverTest extends TestCase {
         double time = TEST_FILE_SAVE_TIME_OFFSET;
         boolean chord[];
 
-        while (time < TEST_FILE_END_TIME){
+        while (time < TEST_FILE_END_TIME) {
             chord = chart.next(time).getChords();
             for (int i = 0; i < chord.length; i++) {
-                if (chord[i]){
+                if (chord[i]) {
                     saver.addPress(new Press(i, time));
                 }
             }
@@ -53,7 +53,7 @@ public class SaverTest extends TestCase {
         assertTrue(comparePressCharts(originalChart, newChart));
     }
 
-    private boolean comparePressCharts(PressChart a, PressChart b){
+    private boolean comparePressCharts(PressChart a, PressChart b) {
 
         Press aPresses[] = a.getPresses();
         Press bPresses[] = b.getPresses();

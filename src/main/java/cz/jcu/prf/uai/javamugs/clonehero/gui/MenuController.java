@@ -1,14 +1,17 @@
 package cz.jcu.prf.uai.javamugs.clonehero.gui;
 
+import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.Parser;
 import cz.jcu.prf.uai.javamugs.clonehero.logic.PressChart;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Game;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -59,12 +62,12 @@ public class MenuController {
         String pressChartPath = pressChartFile.getAbsolutePath();
 
         Parser parser = new Parser();
-        int timeOffset = (int)speedSlider.getValue();
+        int timeOffset = (int) speedSlider.getValue();
 
         PressChart pressChart;
         try {
             pressChart = parser.parseFile(pressChartPath, timeOffset);
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Clone Hero");
             alert.setHeaderText("Error while parsing the file!");
@@ -73,9 +76,9 @@ public class MenuController {
             return;
         }
 
-        int difficulty = (int)difficultySlider.getValue();
+        int difficulty = (int) difficultySlider.getValue();
 
-        Game game = new Game(timeOffset, (byte)difficulty, pressChart);
+        Game game = new Game(timeOffset, (byte) difficulty, pressChart);
 
         openGameWindow(game, songURIstring); //TODO put method under logic
     }
@@ -95,8 +98,7 @@ public class MenuController {
             gameStage.show();
             gameController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -123,8 +125,7 @@ public class MenuController {
 
             editorController.start();
             //((Node)(event.getSource())).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

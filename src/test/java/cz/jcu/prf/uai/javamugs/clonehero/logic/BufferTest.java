@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  */
 public class BufferTest extends TestCase {
     public void testCheck() throws Exception {
-        Buffer buffer = new cz.jcu.prf.uai.javamugs.clonehero.logic.Buffer((byte)1);
+        Buffer buffer = new cz.jcu.prf.uai.javamugs.clonehero.logic.Buffer((byte) 1);
 
         BufferReport report;
 

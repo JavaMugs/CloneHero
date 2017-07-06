@@ -5,61 +5,63 @@ import java.util.ArrayList;
 
 
 public class PressChart {
-	
-	private Press[] presses;
-	private ArrayList<Press> pressesBackup;
-	private int lastCalledItem;
 
-	/**
-	 * Set array of Presses from Array list
-	 * @param presses arraylist
-	 */
-	public PressChart(ArrayList<Press> presses) {
-		if(presses == null)
-			throw new InvalidParameterException();
+    private Press[] presses;
+    private ArrayList<Press> pressesBackup;
+    private int lastCalledItem;
 
-		int size = presses.size();
-		this.presses = new Press[size];
-		this.pressesBackup = new ArrayList<>();
-		for(int i = 0; i<size; i++) {
-			Press press = new Press(presses.get(i).getColor(), presses.get(i).getDrawTime());
+    /**
+     * Set array of Presses from Array list
+     *
+     * @param presses arraylist
+     */
+    public PressChart(ArrayList<Press> presses) {
+        if (presses == null)
+            throw new InvalidParameterException();
 
-			this.presses[i] = press;
-			pressesBackup.add(press);
-		}
+        int size = presses.size();
+        this.presses = new Press[size];
+        this.pressesBackup = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            Press press = new Press(presses.get(i).getColor(), presses.get(i).getDrawTime());
 
-		this.lastCalledItem = 0;
-	}
+            this.presses[i] = press;
+            pressesBackup.add(press);
+        }
 
-	/**
-	 * Get all Chords which are called between last time and actual call
-	 * @param currentTime actual time
-	 * @return Chord
-	 */
-	public Chord next(double currentTime) {
+        this.lastCalledItem = 0;
+    }
 
-		int i = this.lastCalledItem;
-		boolean[] arr = new boolean[5];
+    /**
+     * Get all Chords which are called between last time and actual call
+     *
+     * @param currentTime actual time
+     * @return Chord
+     */
+    public Chord next(double currentTime) {
 
-		for (int y = 0; y< arr.length; y++)
-			arr[y] = false;
+        int i = this.lastCalledItem;
+        boolean[] arr = new boolean[5];
 
-		if(presses.length<=this.lastCalledItem){
-			return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
-		}
+        for (int y = 0; y < arr.length; y++)
+            arr[y] = false;
 
-		while(i < presses.length && presses[i].getDrawTime() < currentTime) {
-			arr[presses[i].getColor()] = true;
+        if (presses.length <= this.lastCalledItem) {
+            return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
+        }
 
-			i++;
-		}
+        while (i < presses.length && presses[i].getDrawTime() < currentTime) {
+            arr[presses[i].getColor()] = true;
 
-		this.lastCalledItem = i;
+            i++;
+        }
 
-		return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
-	}
+        this.lastCalledItem = i;
 
-	public Press[] getPresses() {
-		return presses;
-	}
+        return new Chord(arr[Chord.RED], arr[Chord.YELLOW], arr[Chord.GREEN], arr[Chord.BLUE], arr[Chord.MAGENTA]);
+    }
+
+    public Press[] getPresses() {
+        return presses;
+    }
 }

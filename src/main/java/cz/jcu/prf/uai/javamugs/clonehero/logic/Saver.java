@@ -18,14 +18,16 @@ public class Saver {
 
     /**
      * Adds a press to be processed.
+     *
      * @param pressToAdd MUST CONTAIN PRESS TIME, NOT DRAW TIME.
      */
-    public void addPress(Press pressToAdd){
+    public void addPress(Press pressToAdd) {
         toSave.add(pressToAdd);
     }
 
     /**
      * Saves contained presses into .prc file.
+     *
      * @param path Where file should be saved.
      * @throws IOException in case there is a problem with processing the file.
      */
@@ -34,18 +36,17 @@ public class Saver {
 
         if (!path.endsWith(".prc")) path += ".prc";
 
-        try{
-            PrintWriter writer =  new PrintWriter(new BufferedWriter(new FileWriter(path)));
+        try {
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(path)));
 
             Press toWrite;
-            while (!toSave.isEmpty()){
+            while (!toSave.isEmpty()) {
                 toWrite = toSave.remove(0);
                 writer.println(toWrite.getDrawTime() + ":" + toWrite.getColor());   //Draw time is actually
-                                                                                    // press time int this case.
+                // press time int this case.
             }
             writer.close();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             throw new IOException("Problem with writing specified file: " + e.getMessage());
         }
 

@@ -1,9 +1,6 @@
 package cz.jcu.prf.uai.javamugs.clonehero.logic;
 
-import cz.jcu.prf.uai.javamugs.clonehero.logic.BufferReport;
-import cz.jcu.prf.uai.javamugs.clonehero.logic.Chord;
-
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by ivank on 04.07.2017.
@@ -65,15 +62,11 @@ public class Buffer {
         Chord hitChord = new Chord(false, false, false, false, false);
         Chord missChord = new Chord(false, false, false, false, false);
         if (expectedBufferRecords.isEmpty()) {
-            for (int i = 0; i < missChord.getChords().length; i++)
-                missChord.getChords()[i] = pressedKeys.getChords()[i];
+            System.arraycopy(pressedKeys.getChords(), 0, missChord.getChords(), 0, missChord.getChords().length);
         }
         for (BufferRecord expectedBufferRecord : expectedBufferRecords) {
             expectedBufferRecord.checkUnexpectedPresses(pressedKeys, missChord);
             expectedBufferRecord.checkHits(pressedKeys, hitChord);
-            if (!pressedKeys.isEmpty()) {
-                int i = 1 + 1;
-            }
         }
         // check empty expected chords and chord out of time
         for (int i = 0; i < bufferRecords.size(); i++) {
