@@ -40,7 +40,7 @@ public class Saver {
             Press toWrite;
             while (!toSave.isEmpty()){
                 toWrite = toSave.remove(0);
-                writer.println(toWrite.getDrawTime() + ':' + toWrite.getColor());   //Draw time is actually
+                writer.println(toWrite.getDrawTime() + ":" + toWrite.getColor());   //Draw time is actually
                                                                                     // press time int this case.
             }
             writer.close();
