@@ -34,6 +34,8 @@ public class GameController {
     private AnimationTimer mainCycle;
     private int[] highlightedStrings = new int[5];
     private int[] lights = new int[5];
+    Random random = new Random();
+    private Image background;
 
     public Canvas canvas;
     public BorderPane rootContainer;
@@ -53,6 +55,7 @@ public class GameController {
      */
     public void start() {
         this.stage = (Stage) rootContainer.getScene().getWindow();
+        background = new Image(getClass().getResource("/bg.jpg").toString());
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 try {
@@ -163,8 +166,7 @@ public class GameController {
      */
     private void renderCanvas(GameReport report) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.drawImage(new Image(getClass().getResource("/bg.jpg").toString()), 0, 0);
-        Random random = new Random();
+        gc.drawImage(background, 0, 0);
         for (int i = 0; i < highlightedStrings.length; i++) {
             //Strings
             gc.setLineWidth(5);

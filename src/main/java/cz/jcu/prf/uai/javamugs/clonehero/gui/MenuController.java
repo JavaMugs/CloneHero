@@ -24,6 +24,8 @@ import java.io.IOException;
 
 public class MenuController {
     private Stage stage;
+    private EditorController editorController;
+    private GameController gameController;
     public Label difficultyLabel;
     public Slider speedSlider;
     public Slider difficultySlider;
@@ -102,7 +104,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Game.fxml"));
             Parent root = loader.load();
-            cz.jcu.prf.uai.javamugs.clonehero.gui.GameController gameController = (cz.jcu.prf.uai.javamugs.clonehero.gui.GameController) loader.getController();
+            gameController = (GameController) loader.getController();
             gameController.setGame(game);
             gameController.setSongURIstring(songURIstring);
             Stage gameStage = new Stage();
@@ -126,7 +128,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Editor.fxml"));
             Parent root = loader.load();
-            cz.jcu.prf.uai.javamugs.clonehero.gui.EditorController editorController = (cz.jcu.prf.uai.javamugs.clonehero.gui.EditorController) loader.getController();
+            editorController = (EditorController) loader.getController();
             fileChooser.setTitle("Select song");
             fileChooser.getExtensionFilters().clear();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
